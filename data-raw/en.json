@@ -1,0 +1,123 @@
+{
+    "name": "en",
+    "date_order": "MDY",
+    "january": [
+        "january",
+        "jan"
+    ],
+    "february": [
+        "february",
+        "feb"
+    ],
+    "march": [
+        "march",
+        "mar"
+    ],
+    "april": [
+        "april",
+        "apr"
+    ],
+    "may": [
+        "may"
+    ],
+    "june": [
+        "june",
+        "jun"
+    ],
+    "july": [
+        "july",
+        "jul"
+    ],
+    "august": [
+        "august",
+        "aug"
+    ],
+    "september": [
+        "september",
+        "sep",
+        "sept"
+    ],
+    "october": [
+        "october",
+        "oct"
+    ],
+    "november": [
+        "november",
+        "nov"
+    ],
+    "december": [
+        "december",
+        "dec"
+    ],
+    "monday": [
+        "monday",
+        "mon"
+    ],
+    "tuesday": [
+        "tuesday",
+        "tue",
+        "Tues"
+    ],
+    "wednesday": [
+        "wednesday",
+        "wed"
+    ],
+    "thursday": [
+        "thursday",
+        "thu"
+    ],
+    "friday": [
+        "friday",
+        "fri"
+    ],
+    "saturday": [
+        "saturday",
+        "sat"
+    ],
+    "sunday": [
+        "sunday",
+        "sun"
+    ],
+    "year": [
+        "year",
+        "yr",
+        "years"
+    ],
+    "month": [
+        "month",
+        "mo",
+        "months"
+    ],
+    "week": [
+        "week",
+        "wk",
+        "weeks"
+    ],
+    "day": [
+        "day",
+        "days"
+    ],
+    "circa": [
+        "about",
+        "ca.",
+        "c."
+    ],
+    "between": [
+        "between"
+    ],
+    "before": [
+        "before"
+    ],
+    "after": [
+        "after"
+    ],
+    "in": [
+        "in"
+    ],
+    "simplifications": {
+        "first": "1",
+        "second": "2",
+        "third": "3",
+        "fourth": "4"
+    }
+}

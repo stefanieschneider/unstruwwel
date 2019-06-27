@@ -1,0 +1,10 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^CODE_OF_CONDUCT.md
+^cran-comments.md
+^LICENSE.md
+^README.Rmd
+^data-raw$
+^\.travis.yml
+^appveyor.yml
+^codecov.yml
