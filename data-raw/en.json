@@ -34,8 +34,7 @@
     ],
     "september": [
         "september",
-        "sep",
-        "sept"
+        "sep"
     ],
     "october": [
         "october",
@@ -55,8 +54,7 @@
     ],
     "tuesday": [
         "tuesday",
-        "tue",
-        "Tues"
+        "tue"
     ],
     "wednesday": [
         "wednesday",
@@ -80,17 +78,14 @@
     ],
     "year": [
         "year",
-        "yr",
         "years"
     ],
     "month": [
         "month",
-        "mo",
         "months"
     ],
     "week": [
         "week",
-        "wk",
         "weeks"
     ],
     "day": [
@@ -99,11 +94,14 @@
     ],
     "circa": [
         "about",
-        "ca.",
-        "c."
+        "circa",
+        "ca"
     ],
     "between": [
         "between"
+    ],
+    "and": [
+        "and"
     ],
     "before": [
         "before"
@@ -111,13 +109,31 @@
     "after": [
         "after"
     ],
-    "in": [
-        "in"
+    "half": [
+        "half"
+    ],
+    "third": [
+        "third"
+    ],
+    "quarter": [
+        "quarter"
+    ],
+    "century": [
+        "century",
+        "cent"
     ],
     "simplifications": {
         "first": "1",
         "second": "2",
         "third": "3",
-        "fourth": "4"
+        "fourth": "4",
+        "fifth": "5",
+        "sixth": "6",
+        "seventh": "7",
+        "eigth": "8",
+        "ninth": "9",
+        "tenth": "10",
+        "eleventh": "11",
+        "twelfth": "12"
     }
 }

@@ -50,68 +50,60 @@
     ],
     "monday": [
         "montag",
-        "mo",
-        "Mon"
+        "mo"
     ],
     "tuesday": [
         "dienstag",
-        "di",
-        "Die"
+        "di"
     ],
     "wednesday": [
         "mittwoch",
-        "mi",
-        "Mit"
+        "mi"
     ],
     "thursday": [
         "donnerstag",
-        "do",
-        "Don"
+        "do"
     ],
     "friday": [
         "freitag",
-        "fr",
-        "Fre"
+        "fr"
     ],
     "saturday": [
         "samstag",
-        "sa",
-        "Sam"
+        "sa"
     ],
     "sunday": [
         "sonntag",
-        "so",
-        "Son"
+        "so"
     ],
     "year": [
         "jahr",
-        "j",
         "Jahre"
     ],
     "month": [
         "monat",
-        "m",
-        "Monate",
-        "Monaten"
+        "monate",
+        "monaten"
     ],
     "week": [
         "woche",
-        "w",
-        "Wochen"
+        "wochen"
     ],
     "day": [
         "tag",
-        "Tage"
+        "tage"
     ],
     "circa": [
         "um",
         "etwa",
         "circa",
-        "ca.",
-        "c."
+        "ca"
     ],
     "between": [
     	"zwischen"
+    ],
+    "and": [
+    	"und"
     ],
     "before": [
         "vor"
@@ -119,14 +111,32 @@
     "after": [
     	"nach"
     ],
-    "in": [
-        "in",
-        "im"
+    "half": [
+        "hälfte"
     ],
-    "simplifications": {
+    "third": [
+        "drittel"
+    ],
+    "quarter": [
+    	"viertel"
+    ],
+    "century": [
+    	"jahrhundert",
+    	"jahrh",
+    	"jh"
+    ],
+    "simplifications": {        
     	"erstes": "1",
     	"zweites": "2",
     	"drittes": "3",
-        "viertes": "4"
+        "viertes": "4",
+        "fünftes": "5",
+        "sechstes": "6",
+        "siebtes": "7",
+        "achtes": "8",
+        "neuntes": "9",
+        "zehntes": "10",
+        "elftes": "11",
+        "zwölftes": "12"
     }
 }

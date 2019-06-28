@@ -3,10 +3,9 @@
 #' @importFrom purrr map set_names
 #' @importFrom magrittr "%>%"
 guess_lang <- function(x) {
-  valid_chars <- "[a-zA-Z\u0080-\uFFFF]+"
   languages <- get("languages")
 
-  x <- str_extract_all(x, valid_chars) %>%
+  x <- str_extract_all(x, "[\\p{L}]+") %>%
     unlist() %>% .[nchar(.) > 1]
 
   language <- map(languages$replacements,

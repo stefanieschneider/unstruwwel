@@ -1,4 +1,4 @@
-is_language <- function(x) {
+is_valid_language <- function(x) {
   return(x %in% get("languages")$name)
 }
 

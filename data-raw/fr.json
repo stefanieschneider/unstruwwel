@@ -1,0 +1,146 @@
+{
+    "name": "fr",
+    "date_order": "DMY",
+    "january": [
+        "janvier",
+        "janv",
+        "jan"
+    ],
+    "february": [
+        "février",
+        "févr",
+        "fév"
+    ],
+    "march": [
+        "mars"
+    ],
+    "april": [
+        "avril",
+        "avr"
+    ],
+    "may": [
+        "mai"
+    ],
+    "june": [
+        "juin",
+        "jun"
+    ],
+    "july": [
+        "juillet",
+        "juil",
+        "jul"
+    ],
+    "august": [
+        "août",
+        "aoû"
+    ],
+    "september": [
+        "septembre",
+        "sept",
+        "sep"
+    ],
+    "october": [
+        "octobre",
+        "oct"
+    ],
+    "november": [
+        "novembre",
+        "nov"
+    ],
+    "december": [
+        "décembre",
+        "déc"
+    ],
+    "monday": [
+        "lundi",
+        "lun",
+        "lu"
+    ],
+    "tuesday": [
+        "mardi",
+        "mar",
+        "ma"
+    ],
+    "wednesday": [
+        "mercredi",
+        "mer",
+        "me"
+    ],
+    "thursday": [
+        "jeudi",
+        "jeu",
+        "je"
+    ],
+    "friday": [
+        "vendredi",
+        "ven",
+        "ve"
+    ],
+    "saturday": [
+        "samedi",
+        "sam",
+        "sa"
+    ],
+    "sunday": [
+        "dimanche",
+        "dim",
+        "di"
+    ],
+    "year": [
+        "année",
+        "années"
+    ],
+    "month": [
+        "mois"
+    ],
+    "week": [
+        "semaine",
+        "semaines"
+    ],
+    "day": [
+        "jour",
+        "j",
+        "jours"
+    ],
+    "circa": [
+        "vers"
+    ],
+    "between": [
+        "entre"
+    ],
+    "and": [
+        "en"
+    ],
+    "before": [
+        "avant"
+    ],
+    "after": [
+        "après"
+    ],
+    "half": [
+        "moitié"
+    ],
+    "third": [
+        "tiers"
+    ],
+    "quarter": [
+        "quart"
+    ],
+    "century": [
+        "siècle"
+    ],
+    "simplifications": {
+        "premier": "1",
+        "deuxième": "2",
+        "troisième": "3",
+        "quatrième": "4",
+        "cinquième": "5",
+        "sixième": "6",
+        "septième": "7",
+        "huitième": "8",
+        "neuvième": "9",
+        "dixième": "10",
+        "Onzième": "11",
+        "douzième": "12"
+    }
+}

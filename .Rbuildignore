@@ -5,6 +5,7 @@
 ^LICENSE.md
 ^README.Rmd
 ^data-raw$
+^data-test$
 ^\.travis.yml
 ^appveyor.yml
 ^codecov.yml

@@ -15,6 +15,7 @@
 #' @examples
 #' \donttest{}
 #'
+#' @importFrom assertthat not_empty
 #' @importFrom purrr map set_names
 #' @importFrom magrittr "%>%"
 #'
@@ -26,26 +27,30 @@ unstruwwel <- function(x, language = "en", midas = FALSE, ...) {
   assertthat::assert_that(is.vector(x))
   assertthat::assert_that(is.logical(midas))
 
-  # dates as defined in midas are language-independent
-  if (check_midas(x, midas = midas)) language <- "en"
-  if (!not_empty(language)) language <- guess_lang(x)
+  if (!guess_midas(x, midas = midas)) {
+    if (!not_empty(language)) language <- guess_lang(x)
+    assertthat::assert_that(is_valid_language(language))
 
-  assertthat::assert_that(
-    not_empty(language), is_language(language)
-  )
-
-  if (!midas) {
-    dates <- extract_numbers(x) %>%
+    dates <- extract_numbers(x, remove = "\\.") %>%
       map(get_dates, language = language)
+  } else {
+    dates <- map(x, convert_midas)
   }
 
   return(dates)
 }
 
-#' @importFrom magrittr "%>%"
-extract_numbers <- function(x) {
-  x <- stringr::str_remove_all(x, "\\.") %>%
-    stringr::str_match_all("([0-9]+)|([^\\s.]+)")
+#' @importFrom stringr str_remove_all str_match_all
+#' @importFrom assertthat not_empty
+extract_numbers <- function(x, remove = NULL) {
+  if (is.list(remove)) remove <- unlist(remove)
+
+  if (not_empty(remove)) {
+    remove <- paste(remove, collapse = "|")
+    x <- str_remove_all(x, pattern = remove)
+  }
+
+  x <- str_match_all(x, "([0-9]+)|([^\\s.]+)")
 
   return(x)
 }

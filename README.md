@@ -15,7 +15,7 @@ status](http://codecov.io/github/stefanieschneider/unstruwwel/coverage.svg?branc
 
 This R package provides means to detect and parse historic dates, e.g.,
 to ISO 8601:2-2019. It automatically converts language-specific verbal
-information, e.g., “1st half of the 19th century,” to its standardized
+information, e.g., “1st half of the 19th century,” into its standardized
 numerical counterparts, e.g., “1801-01-01/1850-12-31.” The package
 follows the recommendations of the MIDAS (Marburger Informations-,
 Dokumentations- und Administrations-System), see, e.g.,
