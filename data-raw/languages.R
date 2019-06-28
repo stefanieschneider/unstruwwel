@@ -12,7 +12,7 @@ get_language <- function(file) {
     )
   )
 
-  n <- unlist(map(data, length))
+  n <- unlist(purrr::map(data, length))
 
   language <- dplyr::mutate(
     language, replacements = list(
@@ -31,6 +31,6 @@ get_language <- function(file) {
 
 languages <- list.files("./data-raw", ".json$",
     full.names = TRUE, ignore.case = TRUE) %>%
-  map(get_language) %>% dplyr::bind_rows()
+  purrr::map(get_language) %>% dplyr::bind_rows()
 
 usethis::use_data(languages, overwrite = TRUE)

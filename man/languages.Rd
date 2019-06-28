@@ -3,13 +3,13 @@
 \docType{data}
 \name{languages}
 \alias{languages}
-\title{Language information}
-\format{A tibble with 2 rows and 4 variables.}
+\title{Language Information}
+\format{A tibble with 4 rows and 4 variables.}
 \usage{
 data(languages)
 }
 \description{
 A dataset containing the names, date orders, simplifications,
-and replacements of 2 languages.
+and replacements of 4 languages.
 }
 \keyword{datasets}
