@@ -1,6 +1,18 @@
 {
     "name": "fr",
     "date_order": "DMY",
+    "winter": [
+        "hiver"
+    ],
+    "spring": [
+        "printemps"
+    ],
+    "summer": [
+        "été"
+    ],
+    "autumn": [
+        "automne"
+    ],
     "january": [
         "janvier",
         "janv",
@@ -8,7 +20,6 @@
     ],
     "february": [
         "février",
-        "févr",
         "fév"
     ],
     "march": [
@@ -27,7 +38,6 @@
     ],
     "july": [
         "juillet",
-        "juil",
         "jul"
     ],
     "august": [
@@ -36,7 +46,6 @@
     ],
     "september": [
         "septembre",
-        "sept",
         "sep"
     ],
     "october": [
@@ -99,11 +108,11 @@
     ],
     "day": [
         "jour",
-        "j",
         "jours"
     ],
     "circa": [
-        "vers"
+        "vers",
+        "incertain"
     ],
     "between": [
         "entre"
@@ -126,8 +135,21 @@
     "quarter": [
         "quart"
     ],
+    "last": [
+        "dernier"
+    ],
     "century": [
         "siècle"
+    ],
+    "bc": [
+        "av j-c",
+        "av jc"
+    ],
+    "skip": [
+        "ère",
+        "le",
+        "er",
+        "e"
     ],
     "simplifications": {
         "premier": "1",

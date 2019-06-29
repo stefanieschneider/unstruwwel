@@ -13,9 +13,8 @@
 #' @return A named list of vectors.
 #'
 #' @examples
-#' \donttest{}
+#' unstruwwel("1. Hälfte 19. Jahrhundert", language = "de")
 #'
-#' @importFrom assertthat not_empty
 #' @importFrom purrr map set_names
 #' @importFrom magrittr "%>%"
 #'
@@ -28,29 +27,39 @@ unstruwwel <- function(x, language = "en", midas = FALSE, ...) {
   assertthat::assert_that(is.logical(midas))
 
   if (!guess_midas(x, midas = midas)) {
-    if (!not_empty(language)) language <- guess_lang(x)
+    if (!assertthat::not_empty(language)) language <- guess_lang(x)
     assertthat::assert_that(is_valid_language(language))
 
-    dates <- extract_numbers(x, remove = "\\.") %>%
-      map(get_dates, language = language)
+    dates <- standardize_vector(x, language, "\\.(?=\\s|$)") %>%
+      extract_numbers() %>% map(get_dates, language = language)
   } else {
-    dates <- map(x, convert_midas)
+    dates <- map(x, convert_midas) # language-independent
   }
 
   return(dates)
 }
 
-#' @importFrom stringr str_remove_all str_match_all
-#' @importFrom assertthat not_empty
-extract_numbers <- function(x, remove = NULL) {
-  if (is.list(remove)) remove <- unlist(remove)
+#' @importFrom stringr str_remove_all str_replace_all
+#' @importFrom purrr pluck set_names
+#' @importFrom magrittr "%>%"
+standardize_vector <- function(x, language, remove = NULL) {
+  language <- dplyr::filter(get("languages"), name == language)
+  remove <- unlist(append(remove, pluck(language$skip, 1)))
 
-  if (not_empty(remove)) {
-    remove <- paste(remove, collapse = "|")
-    x <- str_remove_all(x, pattern = remove)
+  if (assertthat::not_empty(remove)) {
+    x <- str_remove_all(x, paste(remove, collapse = "|"))
   }
 
-  x <- str_match_all(x, "([0-9]+)|([^\\s.]+)")
+  x <- str_replace_all(
+    str_squish(x), set_names(
+      pluck(language$replacements, 1, 2), # replacements
+      pluck(language$replacements, 1, 1)  # patterns
+    )
+  )
 
   return(x)
+}
+
+extract_numbers <- function(x) {
+  return(stringr::str_match_all(x, "([0-9]+)|([^\\s.]+)"))
 }

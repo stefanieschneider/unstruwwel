@@ -26,6 +26,6 @@ A named list of vectors.
 Detect and Parse Historic Dates, e.g., to ISO 8601:2-2019.
 }
 \examples{
-\donttest{}
+unstruwwel("1. Hälfte 19. Jahrhundert", language = "de")
 
 }

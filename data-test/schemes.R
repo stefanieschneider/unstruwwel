@@ -22,6 +22,7 @@ valid_files <- "^[a-z]{2}.rds$" # excludes midas
 
 schemes <- list.files("./data-test", valid_files,
     full.names = TRUE, ignore.case = TRUE) %>%
-  purrr::map(get_scheme) %>% bind_rows()
+  purrr::map(get_scheme) %>% bind_rows() %>%
+  unstruwwel:::normalize()
 
 usethis::use_data(schemes, overwrite = TRUE)

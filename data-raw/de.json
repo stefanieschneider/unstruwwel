@@ -1,6 +1,15 @@
 {
     "name": "de",
     "date_order": "DMY",
+    "spring": [
+        "frühling"
+    ],
+    "summer": [
+        "sommer"
+    ],
+    "autumn": [
+        "herbst"
+    ],
     "january": [
         "januar",
         "jan"
@@ -14,7 +23,6 @@
         "mär"
     ],
     "april": [
-        "april",
         "apr"
     ],
     "may": [
@@ -29,11 +37,9 @@
         "jul"
     ],
     "august": [
-        "august",
         "aug"
     ],
     "september": [
-        "september",
         "sep"
     ],
     "october": [
@@ -41,7 +47,6 @@
         "okt"
     ],
     "november": [
-        "november",
         "nov"
     ],
     "december": [
@@ -97,6 +102,7 @@
         "um",
         "etwa",
         "circa",
+        "wohl",
         "ca"
     ],
     "between": [
@@ -106,7 +112,8 @@
     	"und"
     ],
     "before": [
-        "vor"
+        "vor",
+        "spätestens"
     ],
     "after": [
     	"nach"
@@ -120,10 +127,26 @@
     "quarter": [
     	"viertel"
     ],
+    "last": [
+    	"letztes"
+    ],
+    "end": [
+    	"ende"
+    ],
     "century": [
     	"jahrhundert",
+    	"jahrhunderts",
     	"jahrh",
     	"jh"
+    ],
+    "bc": [
+    	"v chr"
+    ],
+    "skip": [
+    	"dem",
+    	"der",
+    	"das",
+    	"die"
     ],
     "simplifications": {        
     	"erstes": "1",

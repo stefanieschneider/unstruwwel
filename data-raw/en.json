@@ -2,125 +2,80 @@
     "name": "en",
     "date_order": "MDY",
     "january": [
-        "january",
         "jan"
     ],
     "february": [
-        "february",
         "feb"
     ],
     "march": [
-        "march",
         "mar"
     ],
     "april": [
-        "april",
         "apr"
     ],
-    "may": [
-        "may"
-    ],
     "june": [
-        "june",
         "jun"
     ],
     "july": [
-        "july",
         "jul"
     ],
     "august": [
-        "august",
         "aug"
     ],
     "september": [
-        "september",
         "sep"
     ],
     "october": [
-        "october",
         "oct"
     ],
     "november": [
-        "november",
         "nov"
     ],
     "december": [
-        "december",
         "dec"
     ],
     "monday": [
-        "monday",
         "mon"
     ],
     "tuesday": [
-        "tuesday",
         "tue"
     ],
     "wednesday": [
-        "wednesday",
         "wed"
     ],
     "thursday": [
-        "thursday",
         "thu"
     ],
     "friday": [
-        "friday",
         "fri"
     ],
     "saturday": [
-        "saturday",
         "sat"
     ],
     "sunday": [
-        "sunday",
         "sun"
     ],
     "year": [
-        "year",
         "years"
     ],
     "month": [
-        "month",
         "months"
     ],
     "week": [
-        "week",
         "weeks"
     ],
     "day": [
-        "day",
         "days"
     ],
     "circa": [
         "about",
-        "circa",
         "ca"
     ],
-    "between": [
-        "between"
-    ],
-    "and": [
-        "and"
-    ],
-    "before": [
-        "before"
-    ],
-    "after": [
-        "after"
-    ],
-    "half": [
-        "half"
-    ],
-    "third": [
-        "third"
-    ],
-    "quarter": [
-        "quarter"
-    ],
     "century": [
-        "century",
         "cent"
+    ],
+    "skip": [
+        "the"
     ],
     "simplifications": {
         "first": "1",
