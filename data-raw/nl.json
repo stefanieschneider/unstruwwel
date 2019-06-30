@@ -1,9 +1,6 @@
 {
     "name": "nl",
     "date_order": "DMY",
-    "winter": [
-        "winter"
-    ],
     "spring": [
         "bron"
     ],
@@ -133,7 +130,7 @@
     "bc": [
         "v chr"
     ],
-    "skip": [
+    "stop_words": [
         "de",
         "ene"
     ],

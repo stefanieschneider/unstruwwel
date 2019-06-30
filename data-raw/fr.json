@@ -145,7 +145,7 @@
         "av j-c",
         "av jc"
     ],
-    "skip": [
+    "stop_words": [
         "ère",
         "le",
         "er",

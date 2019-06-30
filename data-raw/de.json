@@ -142,7 +142,7 @@
     "bc": [
     	"v chr"
     ],
-    "skip": [
+    "stop_words": [
     	"dem",
     	"der",
     	"das",

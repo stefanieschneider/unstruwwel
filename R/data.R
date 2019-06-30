@@ -8,7 +8,7 @@
 #' @name languages
 #'
 #' @usage data(languages)
-#' @format A tibble with 4 rows and 4 variables.
+#' @format A tibble with 4 rows and 5 variables.
 "languages"
 
 #' Language-Specific Scheme Variants

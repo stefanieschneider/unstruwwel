@@ -4,26 +4,30 @@
 \alias{unstruwwel}
 \title{Detect and Parse Historic Dates}
 \usage{
-unstruwwel(x, language = "en", midas = FALSE, ...)
+unstruwwel(x, midas = FALSE, language = NULL, verbose = TRUE)
 }
 \arguments{
 \item{x}{Input vector. Either a character vector, or something
 coercible to one.}
 
-\item{language}{Language code of the input vector as defined in
-ISO 639-1. Defaults to `en`, i.e, English.}
-
 \item{midas}{If `TRUE`, input vector was standardized using MIDAS
 (Marburger Informations-, Dokumentations- und Administrations-
 System). See \url{https://doi.org/10.11588/artdok.00003770}.}
 
-\item{...}{Optional arguments (currently not used).}
+\item{language}{Language code of the input vector as defined in
+ISO 639-1. If `NULL`, language is detected automatically.}
+
+\item{verbose}{If `TRUE`, additional diagnostics are printed.}
 }
 \value{
 A named list of vectors.
 }
 \description{
 Detect and Parse Historic Dates, e.g., to ISO 8601:2-2019.
+}
+\note{
+Although multiple languages can be detected, only dominant
+ones are ultimately set.
 }
 \examples{
 unstruwwel("1. Hälfte 19. Jahrhundert", language = "de")

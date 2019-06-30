@@ -1,5 +1,9 @@
 is_valid_language <- function(x) {
-  return(x %in% get("languages")$name)
+  return(all(x %in% get("languages")$name))
+}
+
+get_invalid_language <- function(x) {
+  return(x[!(x %in% get("languages")$name)][1])
 }
 
 #' @importFrom utf8 utf8_normalize
