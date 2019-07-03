@@ -12,7 +12,7 @@ guess_midas <- function(x, midas = FALSE, verbose = TRUE) {
   count_dash <- str_detect(x, valid_dashes) %>%
     sum(na.rm = TRUE) %>% `/`(length(x))
 
-  if (count_dash - count_slash < -0.15 && isFALSE(midas)) {
+  if (count_dash - count_slash < -0.15 && !midas) {
     if (interactive()) {
       text <- paste(
         "Input vector might have been standardized using",

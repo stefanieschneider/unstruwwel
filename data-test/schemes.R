@@ -18,7 +18,7 @@ get_scheme <- function(file) {
   return(ungroup(scheme))
 }
 
-valid_files <- "^[a-z]{2}.rds$" # excludes midas
+valid_files <- "^[a-z]{2}.rds$" # excludes
 
 schemes <- list.files("./data-test", valid_files,
     full.names = TRUE, ignore.case = TRUE) %>%

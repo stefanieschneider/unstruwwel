@@ -1,6 +1,9 @@
 {
     "name": "de",
     "date_order": "DMY",
+    "winter": [
+        "winter"
+    ],
     "spring": [
         "frühling"
     ],
@@ -23,6 +26,7 @@
         "mär"
     ],
     "april": [
+    	"april",
         "apr"
     ],
     "may": [
@@ -37,9 +41,11 @@
         "jul"
     ],
     "august": [
+    	"august",
         "aug"
     ],
     "september": [
+    	"september",
         "sep"
     ],
     "october": [
@@ -47,6 +53,7 @@
         "okt"
     ],
     "november": [
+    	"november",
         "nov"
     ],
     "december": [
@@ -83,7 +90,8 @@
     ],
     "year": [
         "jahr",
-        "Jahre"
+        "jahre",
+        "jahren"
     ],
     "month": [
         "monat",
@@ -98,12 +106,17 @@
         "tag",
         "tage"
     ],
-    "circa": [
-        "um",
+    "uncertain": [
+    	"vermutlich",
+    	"vmtl",
         "etwa",
+        "wohl"
+    ],
+    "approximate": [
+        "gegen",
         "circa",
-        "wohl",
-        "ca"
+        "ca",
+        "um"
     ],
     "between": [
     	"zwischen"
@@ -111,12 +124,35 @@
     "and": [
     	"und"
     ],
+    "or": [
+    	"oder"
+   	],
+    "not": [
+    	"nicht"
+    ],
     "before": [
-        "vor",
-        "spätestens"
+        "spätestens",
+        "bis",
+        "vor"
     ],
     "after": [
-    	"nach"
+        "frühestens",
+    	"nach",
+    	"seit",
+    	"ab"
+    ],
+    "early": [
+    	"anfang",
+    	"frühes",
+    	"eingang"
+    ],
+    "mid": [
+    	"mitte"
+    ],
+    "late": [
+    	"ende",
+    	"spätes",
+    	"ausgang"
     ],
     "half": [
         "hälfte"
@@ -130,23 +166,23 @@
     "last": [
     	"letztes"
     ],
-    "end": [
-    	"ende"
-    ],
     "century": [
-    	"jahrhundert",
     	"jahrhunderts",
+    	"jahrhundert",
     	"jahrh",
     	"jh"
     ],
     "bc": [
+    	"vor christi",
+    	"v christi",
     	"v chr"
     ],
     "stop_words": [
     	"dem",
     	"der",
     	"das",
-    	"die"
+    	"die",
+        "des"
     ],
     "simplifications": {        
     	"erstes": "1",

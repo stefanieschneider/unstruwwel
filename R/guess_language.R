@@ -1,48 +1,39 @@
 #' @importFrom stringr str_extract_all str_subset
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 #' @import dplyr
 guess_language <- function(x, verbose = TRUE) {
-  language <- NULL # initializer
+  valid_chars <- "[\\p{L}]{3,}" # three letters minimum
+  language <- NULL # initialize empty default
+
   languages <- get("languages")
 
-  # combinations of numbers and letters
-  valid_chars <- "[\\p{L}]{2,15}"
-
-  x <- str_subset(x, "[0-9]") %>%
-    str_subset(valid_chars)
+  # filter combinations of numbers and letters
+  x <- str_subset(str_subset(x, "[0-9]"), valid_chars)
 
   if (length(x) > 0) {
-    # fill sparse replacements for English
-    languages <- mutate(
-      languages, replacements = case_when(
-        name == "en" ~ list(
-          bind_rows(languages$replacements) %>%
-          pull(after) %>% unique() %>%
-          tibble::enframe(
-            name = NULL, value = "before"
-          ) %>%
-          bind_rows(
-            filter(languages, name == "en") %>%
-              pull(replacements) %>% pluck(1)
-          ) %>%
-          group_by(before) %>% sample_n(1)
-        ),
-        !is.na(name) ~ replacements
-      )
-    )
-
     # sample and extract selected combinations
     text <- str_extract_all(sample_text(x), valid_chars)
 
     # aggregate and filter dominant languages
-    language <- purrr::map(languages$replacements,
-        ~ count_language(.$before, text = text)) %>%
-      purrr::set_names(languages$name) %>% unlist()
-
-    language <- language[language > max(language) / 2]
+    language <- count_per_language(languages, text) %>%
+      tidyr::gather("key", "value", -("id")) %>%
+      mutate(max_value = max(.data$value)) %>%
+      filter(
+        sum(.data$value == .data$max_value) == 1
+      ) %>%
+      mutate(
+        value = case_when(
+          .data$value == .data$max_value ~ 1,
+          !is.na(.data$value) ~ 0
+        )
+      ) %>%
+      group_by(.data$key) %>%
+      summarise(value = sum(.data$value)) %>%
+      filter(.data$value > max(.data$value) / 2)
   }
 
-  if (length(language) == 0) {
+  if (nrow(language) == 0) {
     if (interactive()) {
       text <- paste(
         "Language could not be detected with certainty.",
@@ -54,7 +45,11 @@ guess_language <- function(x, verbose = TRUE) {
     }
   }
 
-  assertthat::assert_that(length(language) > 0)
+  assertthat::assert_that(
+    nrow(language) > 0, msg = "Language could not be detected."
+  )
+
+  language <- purrr::set_names(language$value, language$key)
 
   if (verbose) {
     message(
@@ -74,10 +69,26 @@ sample_text <- function(x, n = 100) {
   return(sample(x, n, replace = replace))
 }
 
+#' @importFrom dplyr bind_rows group_by
+#' @importFrom tibble rowid_to_column
+#' @importFrom purrr map set_names
+#' @importFrom magrittr "%>%"
+count_per_language <- function(x, text) {
+  x <- map(
+      x$replacements, ~ count_language(
+        .$before, text = text
+      )
+    ) %>%
+    set_names(x$name) %>% bind_rows() %>%
+    rowid_to_column("id") %>% group_by(id)
+
+  return(x)
+}
+
 #' @importFrom magrittr "%>%"
 count_language <- function(language, text) {
   text <- purrr::map(text, ~ tolower(.) %>%
     intersect(language) %>% length())
 
-  return(sum(unlist(text)))
+  return(unlist(text))
 }

@@ -13,7 +13,13 @@ get_language <- function(file) {
     ),
 
     simplifications = list(
-      unlist(data$simplifications)
+      tolower(unlist(data$simplifications)) %>%
+      tibble::enframe("before", "after") %>%
+      dplyr::mutate(
+        pattern = purrr::map_chr(
+          before, get_search_variants
+        )
+      )
     )
   )
 
@@ -55,8 +61,31 @@ get_search_variants <- function(x) {
   return(x)
 }
 
-languages <- list.files("./data-raw", ".json$",
-    full.names = TRUE, ignore.case = TRUE) %>%
-  purrr::map(get_language) %>% dplyr::bind_rows()
+add_language <- function(language, path) {
+  wrapper <- list.files(
+      path, "\\.json$", full.names = TRUE
+    ) %>%
+    purrr::map(
+      ~ jsonlite::fromJSON(.) %>%
+        purrr::map(~ if (is.list(.))
+          list(` ` = "") else "")
+    )
 
+  index <- purrr::map(wrapper, length) %>%
+    unlist() %>% which.max() %>% `[`(1)
+
+  file <- purrr::pluck(wrapper, index) %>%
+    jsonlite:::toJSON(pretty = 4)
+
+  path <- sprintf("%s/%s.json", path, language)
+  sink(path); print(file); sink()
+}
+
+languages <- list.files(
+    "./data-raw", "\\.json$", full.names = TRUE
+  ) %>%
+  purrr::map(get_language) %>% dplyr::bind_rows() %>%
+  unstruwwel:::normalize()
+
+# add_language("it", path = "./data-raw")
 usethis::use_data(languages, overwrite = TRUE)

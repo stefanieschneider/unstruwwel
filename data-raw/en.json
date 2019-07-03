@@ -1,81 +1,156 @@
 {
     "name": "en",
     "date_order": "MDY",
+    "winter": [
+        "winter"
+    ],
+    "spring": [
+        "spring"
+    ],
+    "summer": [
+        "summer"
+    ],
+    "autumn": [
+        "autumn"
+    ],
     "january": [
+        "january",
         "jan"
     ],
     "february": [
+        "february",
         "feb"
     ],
     "march": [
+        "march",
         "mar"
     ],
     "april": [
+        "april",
         "apr"
     ],
     "june": [
+        "june",
         "jun"
     ],
     "july": [
+        "july",
         "jul"
     ],
     "august": [
+        "august",
         "aug"
     ],
     "september": [
+        "september",
         "sep"
     ],
     "october": [
+        "october",
         "oct"
     ],
     "november": [
+        "november",
         "nov"
     ],
     "december": [
+        "december",
         "dec"
     ],
     "monday": [
+        "monday",
         "mon"
     ],
     "tuesday": [
+        "tuesday",
         "tue"
     ],
     "wednesday": [
+        "wednesday",
         "wed"
     ],
     "thursday": [
+        "thursday",
         "thu"
     ],
     "friday": [
+        "friday",
         "fri"
     ],
     "saturday": [
+        "saturday",
         "sat"
     ],
     "sunday": [
+        "sunday",
         "sun"
     ],
     "year": [
+        "year",
         "years"
     ],
     "month": [
+        "month",
         "months"
     ],
     "week": [
+        "week",
         "weeks"
     ],
     "day": [
+        "day",
         "days"
     ],
     "circa": [
+        "probably",
+        "perhaps",
         "about",
+        "circa",
         "ca"
     ],
+    "between": [
+        "between"
+    ],
+    "and": [
+        "and"
+    ],
+    "or": [
+        "or"
+    ],
+    "not": [
+        "not"
+    ],
+    "before": [
+        "before"
+    ],
+    "after": [
+        "after"
+    ],
+    "half": [
+        "half"
+    ],
+    "third": [
+        "third"
+    ],
+    "quarter": [
+        "quarter"
+    ],
+    "last": [
+        "last"
+    ],
+    "end": [
+        "end"
+    ],
     "century": [
+        "century",
         "cent"
     ],
+    "bc": [
+        "bc"
+    ],
     "stop_words": [
-        "the"
+        "the",
+        "a"
     ],
     "simplifications": {
         "first": "1",

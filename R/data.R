@@ -1,7 +1,7 @@
 #' Language Information
 #'
-#' A dataset containing the names, date orders, simplifications,
-#' and replacements of 4 languages.
+#' A dataset containing the names, date orders, stop words,
+#' simplifications, and replacements of 4 languages.
 #'
 #' @docType data
 #' @keywords datasets
@@ -23,3 +23,17 @@
 #' @usage data(schemes)
 #' @format A tibble with 3583 rows and 3 variables.
 "schemes"
+
+#' MIDAS Standardization Examples
+#'
+#' A dataset containing eight thousand standardization examples
+#' of the MIDAS (Marburger Informations-, Dokumentations- und
+#' Administrations-System).
+#'
+#' @docType data
+#' @keywords datasets
+#' @name midas
+#'
+#' @usage data(midas)
+#' @format A vector of length 8115.
+"midas"

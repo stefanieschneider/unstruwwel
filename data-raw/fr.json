@@ -15,7 +15,6 @@
     ],
     "january": [
         "janvier",
-        "janv",
         "jan"
     ],
     "february": [
@@ -111,14 +110,19 @@
         "jours"
     ],
     "circa": [
-        "vers",
-        "incertain"
+        "vers"
     ],
     "between": [
         "entre"
     ],
     "and": [
-        "en"
+        "et"
+    ],
+    "or": [
+        "ou"
+    ],
+    "not": [
+        "non"
     ],
     "before": [
         "avant"
@@ -149,6 +153,7 @@
         "ère",
         "le",
         "er",
+        "en",
         "e"
     ],
     "simplifications": {

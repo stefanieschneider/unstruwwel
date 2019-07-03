@@ -1,36 +1,42 @@
+#' @importFrom dplyr select filter arrange
+#' @importFrom tibble as_tibble rowid_to_column
+#' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 get_dates <- function(x, language) {
-  colnames(x) <- c("value", "digits", "letters")
+  colnames(x) <- c("value", "numeral", "word", "sign")
 
-  x <- tibble::as_tibble(x, .name_repair = "unique") %>%
-    dplyr::mutate(letters = tolower(letters))
+  x <- as_tibble(x, .name_repair = "unique") %>%
+    select(-c("value")) %>% rowid_to_column("id") %>%
+    tidyr::gather("key", "value", -c("id")) %>%
+    filter(!is.na(.data$value)) %>% arrange(id) %>%
+    simplify(language = language)
 
   return(x)
 }
 
-simplify <- function(x) {
+#' @importFrom dplyr bind_rows mutate case_when select
+#' @importFrom stringr str_replace_all str_detect
+#' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
+simplify <- function(x, language) {
+  language <- filter(get("languages"), .data$name %in% language)
+  replacements <- bind_rows(language$simplifications)
 
-}
+  x <- mutate(
+      x, numeral = lag(.data$key == "numeral", default = FALSE),
+      value = case_when(
+        !numeral ~ str_replace_all(
+          .data$value, purrr::set_names(
+            replacements$after, replacements$pattern
+          )
+        ),
+        TRUE ~ .data$value
+      ),
+      key = case_when(
+        str_detect(.data$value, "[0-9]+") ~ "numeral",
+        !is.na(.data$value) ~ .data$key
+      )
+    )
 
-is_suffix <- function(x) {
-
-}
-
-is_year <- function(x) {
-
-}
-
-is_season <- function(x) {
-
-}
-
-is_month <- function(x) {
-
-}
-
-is_day <- function(x) {
-
-}
-
-is_prefix <- function(x) {
-
+  return(select(x, -c("numeral")))
 }

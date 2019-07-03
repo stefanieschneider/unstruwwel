@@ -36,13 +36,13 @@ unstruwwel <- function(x, midas = FALSE, language = NULL, verbose = TRUE) {
 
     assertthat::assert_that(
       is_valid_language(language), msg = sprintf(
-        "%s is either not defined in ISO 639-1 or not yet
-        implemented.", get_invalid_language(language)
+        paste("%s is either not defined in ISO 639-1 or not yet",
+          "implemented."), get_invalid_language(language)
       )
     )
 
     dates <- standardize_vector(x, language, "\\.(?=[^0-9]|$)") %>%
-      extract_numbers() %>% map(get_dates, language = language)
+      extract_groups() %>% map(get_dates, language = language)
   } else {
     dates <- map(x, convert_midas) # language-independent
   }
@@ -55,23 +55,28 @@ unstruwwel <- function(x, midas = FALSE, language = NULL, verbose = TRUE) {
 #' @import stringr dplyr
 standardize_vector <- function(x, language, remove = NULL) {
   language <- filter(get("languages"), .data$name %in% language)
-  replacements <- bind_rows(language$replacements) %>% distinct()
-
-  remove <- unlist(append(remove, language$stop_words))
+  remove <- unlist(append(remove, language$stop_words), TRUE)
 
   if (assertthat::not_empty(remove)) {
     x <- str_remove_all(x, paste(remove, collapse = "|"))
   }
 
-  x <- str_replace_all(
-    str_squish(x), purrr::set_names(
-      replacements$after, replacements$pattern
+  replacements <- bind_rows(language$replacements) %>%
+    filter(.data$before != .data$after) %>% distinct()
+
+  x <- utf8::utf8_normalize(x) %>% str_squish() %>%
+    str_replace_all(
+      purrr::set_names(
+        replacements$after, replacements$pattern
+      )
     )
-  )
 
   return(x)
 }
 
-extract_numbers <- function(x) {
-  return(stringr::str_match_all(x, "([0-9]+)|([^\\s.]+)"))
+extract_groups <- function(x) {
+  # numerals, letters, and special characters
+  capture_groups <- "([0-9]+)|(\\p{L}+)|([^\\s])"
+
+  return(stringr::str_match_all(x, capture_groups))
 }

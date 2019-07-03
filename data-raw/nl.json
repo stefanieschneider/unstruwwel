@@ -1,6 +1,9 @@
 {
     "name": "nl",
     "date_order": "DMY",
+    "winter": [
+        "winter"
+    ],
     "spring": [
         "bron"
     ],
@@ -23,6 +26,7 @@
         "mrt"
     ],
     "april": [
+        "april",
         "apr"
     ],
     "may": [
@@ -41,6 +45,7 @@
         "aug"
     ],
     "september": [
+        "september",
         "sep"
     ],
     "october": [
@@ -48,6 +53,7 @@
         "okt"
     ],
     "november": [
+        "november",
         "nov"
     ],
     "december": [
@@ -106,10 +112,18 @@
     "and": [
         "en"
     ],
+    "or": [
+        "of"
+    ],
+    "not": [
+        "niet"
+    ],
     "before": [
+        "uiterlijk",
         "vóór"
     ],
     "after": [
+        "vroegste",
         "na"
     ],
     "half": [

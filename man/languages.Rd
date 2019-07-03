@@ -9,7 +9,7 @@
 data(languages)
 }
 \description{
-A dataset containing the names, date orders, simplifications,
-and replacements of 4 languages.
+A dataset containing the names, date orders, stop words,
+simplifications, and replacements of 4 languages.
 }
 \keyword{datasets}
