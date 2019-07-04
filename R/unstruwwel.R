@@ -36,7 +36,7 @@ unstruwwel <- function(x, midas = FALSE, language = NULL, verbose = TRUE) {
 
     assertthat::assert_that(
       is_valid_language(language), msg = sprintf(
-        paste("%s is either not defined in ISO 639-1 or not yet",
+        paste("`%s` is either not defined in ISO 639-1 or not yet",
           "implemented."), get_invalid_language(language)
       )
     )

@@ -14,6 +14,7 @@ Suggests:
     testthat (>= 2.1.0),
     roxygen2
 Imports: 
+    R6,
     utf8,
     jsonlite,
     assertthat,

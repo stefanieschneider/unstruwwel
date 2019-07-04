@@ -15,7 +15,7 @@ get_invalid_language <- function(x) {
 }
 
 is_year <- function(x) {
-  return(stringr::str_detect(x, "[1-2][0-9]{3}"))
+  return(x %in% 1000:2100)
 }
 
 is_season <- function(x) {

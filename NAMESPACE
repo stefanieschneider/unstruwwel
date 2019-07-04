@@ -3,6 +3,7 @@
 export(unstruwwel)
 import(dplyr)
 import(stringr)
+importFrom(R6,R6Class)
 importFrom(dplyr,arrange)
 importFrom(dplyr,bind_rows)
 importFrom(dplyr,case_when)
