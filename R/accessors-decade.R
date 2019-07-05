@@ -1,13 +1,13 @@
-#' Set a Century and Get its Time Interval
+#' Set a Decade and Get its Time Interval
 #'
 #' @return Object of \code{\link{R6Class}} with methods to set
-#' common time periods and specifications for centuries.
+#' common time periods and specifications for decades.
 #' @format An \code{\link{R6Class}} object.
 #'
 #' @examples
 #' \donttest{
-#'   x <- Century$new(15)
-#'   x$take(2, type = "third")
+#'   x <- Decade$new(1520)
+#'   x$take(1, type = "half")
 #' }
 #'
 #' @field interval Stores a time interval.
@@ -20,7 +20,7 @@
 #'   \item{\code{type}}{A character scalar. The following values
 #'     are supported: \code{"early"}, \code{"mid"}, \code{"late"},
 #'     \code{"quarter"}, \code{"third"}, and \code{"half"}. If
-#'     \code{type} is `NULL`, \code{x} defines a decade.}
+#'     \code{type} is `NULL`, \code{x} defines a year.}
 #' }
 #'
 #' @section Methods:
@@ -32,15 +32,15 @@
 #' @docType class
 #'
 #' @importFrom R6 R6Class
-Century <- R6Class(
-  classname = "Century",
+Decade <- R6Class(
+  classname = "Decade",
   inherit = Period,
 
   private = list(
     .take_early = function() {
       interval <- c(
         private$.interval[1],
-        private$.interval[1] + 14
+        private$.interval[1] + 1
       )
 
       return(interval)
@@ -48,8 +48,8 @@ Century <- R6Class(
 
     .take_mid = function() {
       interval <- c(
-        private$.interval[1] + 45,
-        private$.interval[2] - 45
+        private$.interval[1] + 4,
+        private$.interval[2] - 4
       )
 
       return(interval)
@@ -57,7 +57,7 @@ Century <- R6Class(
 
     .take_late = function() {
       interval <- c(
-        private$.interval[2] - 14,
+        private$.interval[2] - 1,
         private$.interval[2]
       )
 
@@ -69,18 +69,18 @@ Century <- R6Class(
     initialize = function(value) {
       assertthat::assert_that(
         length(value) == 1 && floor(value) == value,
-        value < 22 || is_year(value)
+        value <= get_current_year()
       )
 
       if (value < 0) private$.negative <- TRUE
 
-      if (is_year(value)) {
-        value <- stringr::str_sub(value, end = 2)
-        value <- as.integer(value) + 1
+      if (value %% 10 != 0) {
+        assertthat::assert_that(value < 202)
+        value <- abs(value) * 10 + 1
       }
 
       private$.interval <- c(
-        abs(value) * 100 - 99, abs(value) * 100
+        abs(value), abs(value) + 9
       )
     }
   )

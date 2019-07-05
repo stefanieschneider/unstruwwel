@@ -14,8 +14,12 @@ get_invalid_language <- function(x) {
   return(x[!(x %in% get("languages")$name)][1])
 }
 
+get_current_year <- function() {
+  return(as.integer(format(Sys.Date(), "%Y")))
+}
+
 is_year <- function(x) {
-  return(x %in% 1000:2100)
+  return(x %in% 1000:get_current_year())
 }
 
 is_season <- function(x) {
