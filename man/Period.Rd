@@ -5,20 +5,70 @@
 \alias{Period}
 \title{Set a Period}
 \format{An \code{\link{R6Class}} object.}
-\usage{
-Period
-}
 \value{
 Object of \code{\link{R6Class}}.
 }
 \description{
 Set a Period
+
+Set a Period
 }
-\section{Fields}{
-
-\describe{
-\item{\code{interval}}{Stores a time interval.}
-}}
-
 \keyword{date}
 \keyword{time}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{interval}}{Stores a time interval.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{Period$new()}}
+\item \href{#method-set_fuzzy}{\code{Period$set_fuzzy()}}
+\item \href{#method-take}{\code{Period$take()}}
+\item \href{#method-clone}{\code{Period$clone()}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Period$new(...)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-set_fuzzy"></a>}}
+\subsection{Method \code{set_fuzzy()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Period$set_fuzzy(x)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-take"></a>}}
+\subsection{Method \code{take()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Period$take(x = NA, type = NA)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Period$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

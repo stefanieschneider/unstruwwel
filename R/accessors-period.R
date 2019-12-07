@@ -58,21 +58,65 @@ Period <- R6Class(
   ),
 
   public = list(
-    take = function(x = NULL, type = NA) {
-      assertthat::assert_that(length(type) == 1)
-      type <- tolower(as.character(type))
+    approximate = FALSE,
+    uncertain = FALSE,
 
-      interval <- switch(type,
-        early = private$.take_early(),
-        late = private$.take_late(),
-        mid = private$.take_mid(),
+    initialize = function(...) {
+      withCallingHandlers({
+        x <- lapply(list(...), function(x) {
+          if ("Period" %in% class(x)) x$interval else x
+        })
 
-        private$.take_period(x, type)
-      )
+        x <- unlist(x, FALSE, use.names = FALSE)
+        x <- c(na.omit(as.integer(x)), recursive = TRUE)
 
-      negative <- ifelse(private$.negative, -1, 1)
+        assertthat::assert_that(length(x) > 0)
 
-      return(sort(interval * negative))
+        if (max(x) < 0) private$.negative <- TRUE
+        private$.interval <- c(min(x), c(max(x)))
+      }, warning = function(event) {
+        invokeRestart("muffleWarning")
+      })
+    },
+
+    set_fuzzy = function(x) {
+      self$approximate <- any(c("approximate", "?") %in% x)
+      self$uncertain <- any(c("uncertain") %in% x)
+
+      return(self)
+    },
+
+    take = function(x = NA, type = NA) {
+      tryCatch({
+        if (length(x) == 2) type <- x[2]; x <- x[1]
+        if (!is.na(x) & x != "last") x <- as.numeric(x)
+
+        assertthat::assert_that(length(type) == 1)
+        type <- tolower(as.character(type))
+
+        interval <- switch(type,
+          early = private$.take_early(),
+          late = private$.take_late(),
+          mid = private$.take_mid(),
+
+          private$.take_period(x, type)
+        )
+
+        negative <- ifelse(private$.negative, -1, 1)
+
+        interval <- sort(interval * negative)
+        new_period <- Period$new(interval)
+
+        new_period$approximate <- self$approximate
+        new_period$uncertain <- self$uncertain
+
+        return(new_period)
+      }, warning = function(event) {
+        invokeRestart("muffleWarning")
+      }, error = function(event) {
+        print(event)
+        return(self)
+      })
     }
   )
 )

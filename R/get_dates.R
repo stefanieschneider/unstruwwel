@@ -1,5 +1,5 @@
-#' @importFrom dplyr select filter arrange
 #' @importFrom tibble as_tibble rowid_to_column
+#' @importFrom dplyr select filter arrange
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
 get_dates <- function(x, language) {
@@ -14,7 +14,7 @@ get_dates <- function(x, language) {
   return(x)
 }
 
-#' @importFrom dplyr bind_rows mutate case_when select
+#' @importFrom dplyr bind_rows mutate case_when select lag
 #' @importFrom stringr str_replace_all str_detect
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
@@ -40,3 +40,9 @@ simplify <- function(x, language) {
 
   return(select(x, -c("numeral")))
 }
+
+Date <- R6::R6Class("Date", list(
+  values = NA_character_,
+  approximate = FALSE,
+  uncertain = FALSE
+))

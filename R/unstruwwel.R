@@ -50,9 +50,10 @@ unstruwwel <- function(x, midas = FALSE, language = NULL, verbose = TRUE) {
   return(dates)
 }
 
+#' @importFrom stringr str_remove_all str_replace_all str_squish
+#' @importFrom dplyr filter bind_rows distinct
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
-#' @import stringr dplyr
 standardize_vector <- function(x, language, remove = NULL) {
   language <- filter(get("languages"), .data$name %in% language)
   remove <- unlist(append(remove, language$stop_words), TRUE)
@@ -74,9 +75,10 @@ standardize_vector <- function(x, language, remove = NULL) {
   return(x)
 }
 
+#' @importFrom stringr str_match_all
 extract_groups <- function(x) {
   # numerals, letters, and special characters
   capture_groups <- "([0-9]+)|(\\p{L}+)|([^\\s])"
 
-  return(stringr::str_match_all(x, capture_groups))
+  return(str_match_all(x, capture_groups))
 }

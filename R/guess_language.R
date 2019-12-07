@@ -1,7 +1,7 @@
+#' @importFrom dplyr mutate filter case_when group_by summarise
 #' @importFrom stringr str_extract_all str_subset
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
-#' @import dplyr
 guess_language <- function(x, verbose = TRUE) {
   valid_chars <- "[\\p{L}]{3,}" # three letters minimum
   language <- NULL # initialize empty default

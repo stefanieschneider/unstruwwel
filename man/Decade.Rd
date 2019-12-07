@@ -5,22 +5,15 @@
 \alias{Decade}
 \title{Set a Decade and Get its Time Interval}
 \format{An \code{\link{R6Class}} object.}
-\usage{
-Decade
-}
 \value{
 Object of \code{\link{R6Class}} with methods to set
 common time periods and specifications for decades.
 }
 \description{
 Set a Decade and Get its Time Interval
+
+Set a Decade and Get its Time Interval
 }
-\section{Fields}{
-
-\describe{
-\item{\code{interval}}{Stores a time interval.}
-}}
-
 \section{Arguments}{
 
 \describe{
@@ -50,3 +43,60 @@ Set a Decade and Get its Time Interval
 }
 \keyword{date}
 \keyword{time}
+\section{Super class}{
+\code{\link[unstruwwel:Period]{unstruwwel::Period}} -> \code{Decade}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{interval}}{Stores a time interval.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{interval}}{Stores a time interval.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{Decade$new()}}
+\item \href{#method-clone}{\code{Decade$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="unstruwwel" data-topic="Period" data-id="set_fuzzy">}\href{../../unstruwwel/html/Period.html#method-set_fuzzy}{\code{unstruwwel::Period$set_fuzzy()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="unstruwwel" data-topic="Period" data-id="take">}\href{../../unstruwwel/html/Period.html#method-take}{\code{unstruwwel::Period$take()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Decade$new(value)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Decade$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

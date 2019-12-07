@@ -67,6 +67,8 @@ Decade <- R6Class(
 
   public = list(
     initialize = function(value) {
+      if (is.character(value)) value <- as.numeric(value)
+
       assertthat::assert_that(
         length(value) == 1 && floor(value) == value,
         value <= get_current_year()

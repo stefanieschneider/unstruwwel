@@ -49,26 +49,17 @@ is_day <- function(x) {
   return(x %in% days)
 }
 
-is_suffix <- function(x) {
-
-}
-
-is_prefix <- function(x) {
-
-}
-
-is_uncertain <- function(x) {
-  return(x %in% c("uncertain", "?"))
-}
-
-is_approximate <- function(x) {
-  return(x %in% c("approximate"))
-}
-
 is_or <- function(x) {
   return(x %in% c("or"))
 }
 
 is_and <- function(x) {
   return(x %in% c("and", "/"))
+}
+
+build_century <- function(x) {
+  x_take <- c(x[length(x) - 2], x[length(x) - 1])
+  x_date <- Century$new(x[length(x)])$set_fuzzy(x)
+
+  return(x_date$take(x_take))
 }
