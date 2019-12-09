@@ -17,13 +17,19 @@ test_that("negative decade", {
 })
 
 test_that("invalid take", {
-  x <- Decade$new(1970)
+  x <- Decade$new(1970); y <- c(1970, 1979)
 
-  expect_equal(x$take(99)$interval, c(1970, 1979))
-  expect_equal(x$take(type = "abc")$interval, c(1970, 1979))
-  expect_equal(x$take(3, type = "half")$interval, c(1970, 1979))
-  expect_equal(x$take(4, type = "third")$interval, c(1970, 1979))
-  expect_equal(x$take(5, type = "quarter")$interval, c(1970, 1979))
+  expect_error(x$take(99))
+  expect_error(x$take(type = "abc"))
+  expect_error(x$take(3, type = "half"))
+  expect_error(x$take(4, type = "third"))
+  expect_error(x$take(5, type = "quarter"))
+
+  expect_equal(x$take(99, ignore_errors = TRUE)$interval, y)
+  expect_equal(x$take(type = "abc", ignore_errors = TRUE)$interval, y)
+  expect_equal(x$take(3, type = "half", ignore_errors = TRUE)$interval, y)
+  expect_equal(x$take(4, type = "third", ignore_errors = TRUE)$interval, y)
+  expect_equal(x$take(5, type = "quarter", ignore_errors = TRUE)$interval, y)
 })
 
 test_that("take period", {

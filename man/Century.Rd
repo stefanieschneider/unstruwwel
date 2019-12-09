@@ -4,36 +4,15 @@
 \name{Century}
 \alias{Century}
 \title{Set a Century and Get its Time Interval}
-\format{An \code{\link{R6Class}} object.}
-\value{
-Object of \code{\link{R6Class}} with methods to set
-common time periods and specifications for centuries.
-}
 \description{
 Set a Century and Get its Time Interval
 
 Set a Century and Get its Time Interval
 }
-\section{Arguments}{
-
-\describe{
-  \item{\code{x}}{A numerical scalar. The range of valid values
-    depends on \code{type}. If \code{type} is \code{"early"},
-    \code{"mid"}, or \code{"late"}, \code{x} is ignored.}
-  \item{\code{type}}{A character scalar. The following values
-    are supported: \code{"early"}, \code{"mid"}, \code{"late"},
-    \code{"quarter"}, \code{"third"}, and \code{"half"}. If
-    \code{type} is `NULL`, \code{x} defines a decade.}
+\details{
+An Object of \code{\link{R6Class}} with methods to set
+common time periods and specifications for centuries.
 }
-}
-
-\section{Methods}{
-
-\describe{
-  \item{\code{take()}}{Set a time period or specification.}
-}
-}
-
 \examples{
 \donttest{
   x <- Century$new(15)
@@ -45,20 +24,6 @@ Set a Century and Get its Time Interval
 \keyword{time}
 \section{Super class}{
 \code{\link[unstruwwel:Period]{unstruwwel::Period}} -> \code{Century}
-}
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{interval}}{Stores a time interval.}
-}
-\if{html}{\out{</div>}}
-}
-\section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{interval}}{Stores a time interval.}
-}
-\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -78,10 +43,31 @@ Set a Century and Get its Time Interval
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
+Helper function to specify the beginning of a century.
+
+
+Helper function to specify the middle of a century.
+
+
+Helper function to specify the end of a century.
+
+
+Create a century.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Century$new(value)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{value}}{A numerical scalar.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Object of \code{\link{R6Class}} with methods to set
+common time periods and specifications for centuries.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

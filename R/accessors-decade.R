@@ -1,31 +1,12 @@
 #' Set a Decade and Get its Time Interval
 #'
-#' @return Object of \code{\link{R6Class}} with methods to set
+#' An Object of \code{\link{R6Class}} with methods to set
 #' common time periods and specifications for decades.
-#' @format An \code{\link{R6Class}} object.
 #'
 #' @examples
 #' \donttest{
 #'   x <- Decade$new(1520)
 #'   x$take(1, type = "half")
-#' }
-#'
-#' @field interval Stores a time interval.
-#'
-#' @section Arguments:
-#' \describe{
-#'   \item{\code{x}}{A numerical scalar. The range of valid values
-#'     depends on \code{type}. If \code{type} is \code{"early"},
-#'     \code{"mid"}, or \code{"late"}, \code{x} is ignored.}
-#'   \item{\code{type}}{A character scalar. The following values
-#'     are supported: \code{"early"}, \code{"mid"}, \code{"late"},
-#'     \code{"quarter"}, \code{"third"}, and \code{"half"}. If
-#'     \code{type} is `NULL`, \code{x} defines a year.}
-#' }
-#'
-#' @section Methods:
-#' \describe{
-#'   \item{\code{take()}}{Set a time period or specification.}
 #' }
 #'
 #' @keywords date time
@@ -37,6 +18,8 @@ Decade <- R6Class(
   inherit = Period,
 
   private = list(
+    #' @description
+    #' Helper function to specify the beginning of a decade.
     .take_early = function() {
       interval <- c(
         private$.interval[1],
@@ -46,6 +29,8 @@ Decade <- R6Class(
       return(interval)
     },
 
+    #' @description
+    #' Helper function to specify the middle of a decade.
     .take_mid = function() {
       interval <- c(
         private$.interval[1] + 4,
@@ -55,6 +40,8 @@ Decade <- R6Class(
       return(interval)
     },
 
+    #' @description
+    #' Helper function to specify the end of a decade.
     .take_late = function() {
       interval <- c(
         private$.interval[2] - 1,
@@ -66,6 +53,13 @@ Decade <- R6Class(
   ),
 
   public = list(
+    #' @description
+    #' Create a decade.
+    #'
+    #' @param value A numerical scalar.
+    #'
+    #' @return Object of \code{\link{R6Class}} with methods to set
+    #' common time periods and specifications for decades.
     initialize = function(value) {
       if (is.character(value)) value <- as.numeric(value)
 

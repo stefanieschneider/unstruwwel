@@ -56,10 +56,3 @@ is_or <- function(x) {
 is_and <- function(x) {
   return(x %in% c("and", "/"))
 }
-
-build_century <- function(x) {
-  x_take <- c(x[length(x) - 2], x[length(x) - 1])
-  x_date <- Century$new(x[length(x)])$set_fuzzy(x)
-
-  return(x_date$take(x_take))
-}

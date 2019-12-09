@@ -1,31 +1,12 @@
 #' Set a Century and Get its Time Interval
 #'
-#' @return Object of \code{\link{R6Class}} with methods to set
+#' An Object of \code{\link{R6Class}} with methods to set
 #' common time periods and specifications for centuries.
-#' @format An \code{\link{R6Class}} object.
 #'
 #' @examples
 #' \donttest{
 #'   x <- Century$new(15)
 #'   x$take(2, type = "third")
-#' }
-#'
-#' @field interval Stores a time interval.
-#'
-#' @section Arguments:
-#' \describe{
-#'   \item{\code{x}}{A numerical scalar. The range of valid values
-#'     depends on \code{type}. If \code{type} is \code{"early"},
-#'     \code{"mid"}, or \code{"late"}, \code{x} is ignored.}
-#'   \item{\code{type}}{A character scalar. The following values
-#'     are supported: \code{"early"}, \code{"mid"}, \code{"late"},
-#'     \code{"quarter"}, \code{"third"}, and \code{"half"}. If
-#'     \code{type} is `NULL`, \code{x} defines a decade.}
-#' }
-#'
-#' @section Methods:
-#' \describe{
-#'   \item{\code{take()}}{Set a time period or specification.}
 #' }
 #'
 #' @keywords date time
@@ -37,6 +18,8 @@ Century <- R6Class(
   inherit = Period,
 
   private = list(
+    #' @description
+    #' Helper function to specify the beginning of a century.
     .take_early = function() {
       interval <- c(
         private$.interval[1],
@@ -46,6 +29,8 @@ Century <- R6Class(
       return(interval)
     },
 
+    #' @description
+    #' Helper function to specify the middle of a century.
     .take_mid = function() {
       interval <- c(
         private$.interval[1] + 45,
@@ -55,6 +40,8 @@ Century <- R6Class(
       return(interval)
     },
 
+    #' @description
+    #' Helper function to specify the end of a century.
     .take_late = function() {
       interval <- c(
         private$.interval[2] - 14,
@@ -66,6 +53,13 @@ Century <- R6Class(
   ),
 
   public = list(
+    #' @description
+    #' Create a century.
+    #'
+    #' @param value A numerical scalar.
+    #'
+    #' @return Object of \code{\link{R6Class}} with methods to set
+    #' common time periods and specifications for centuries.
     initialize = function(value) {
       if (is.character(value)) value <- as.numeric(value)
 

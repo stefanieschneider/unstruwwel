@@ -52,33 +52,31 @@ unstruwwel <- function(x, midas = FALSE, language = NULL, verbose = TRUE) {
 
 #' @importFrom stringr str_remove_all str_replace_all str_squish
 #' @importFrom dplyr filter bind_rows distinct
+#' @importFrom purrr set_names
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
 standardize_vector <- function(x, language, remove = NULL) {
   language <- filter(get("languages"), .data$name %in% language)
   remove <- unlist(append(remove, language$stop_words), TRUE)
 
-  if (assertthat::not_empty(remove)) {
+  if (assertthat::not_empty(remove))
     x <- str_remove_all(x, paste(remove, collapse = "|"))
-  }
 
   replacements <- bind_rows(language$replacements) %>%
     filter(.data$before != .data$after) %>% distinct()
 
   x <- utf8::utf8_normalize(x) %>% str_squish() %>%
     str_replace_all(
-      purrr::set_names(
-        replacements$after, replacements$pattern
-      )
+      set_names(replacements$after, replacements$pattern)
     )
 
   return(x)
 }
 
-#' @importFrom stringr str_match_all
+#' @importFrom stringr str_extract_all
 extract_groups <- function(x) {
-  # numerals, letters, and special characters
-  capture_groups <- "([0-9]+)|(\\p{L}+)|([^\\s])"
+  capture_groups <- "([0-9]+)|(\\p{L}+)"
+  x <- str_extract_all(x, capture_groups)
 
-  return(str_match_all(x, capture_groups))
+  return(x)
 }

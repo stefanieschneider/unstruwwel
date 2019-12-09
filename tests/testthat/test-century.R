@@ -16,13 +16,19 @@ test_that("negative century", {
 })
 
 test_that("invalid take", {
-  x <- Century$new(15)
+  x <- Century$new(15); y <- c(1401, 1500)
 
-  expect_equal(x$take(999)$interval, c(1401, 1500))
-  expect_equal(x$take(type = "abc")$interval, c(1401, 1500))
-  expect_equal(x$take(3, type = "half")$interval, c(1401, 1500))
-  expect_equal(x$take(4, type = "third")$interval, c(1401, 1500))
-  expect_equal(x$take(5, type = "quarter")$interval, c(1401, 1500))
+  expect_error(x$take(999))
+  expect_error(x$take(type = "abc"))
+  expect_error(x$take(3, type = "half"))
+  expect_error(x$take(4, type = "third"))
+  expect_error(x$take(5, type = "quarter"))
+
+  expect_equal(x$take(999, ignore_errors = TRUE)$interval, y)
+  expect_equal(x$take(type = "abc", ignore_errors = TRUE)$interval, y)
+  expect_equal(x$take(3, type = "half", ignore_errors = TRUE)$interval, y)
+  expect_equal(x$take(4, type = "third", ignore_errors = TRUE)$interval, y)
+  expect_equal(x$take(5, type = "quarter", ignore_errors = TRUE)$interval, y)
 })
 
 test_that("take period", {

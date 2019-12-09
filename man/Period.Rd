@@ -3,22 +3,37 @@
 \docType{class}
 \name{Period}
 \alias{Period}
-\title{Set a Period}
-\format{An \code{\link{R6Class}} object.}
-\value{
-Object of \code{\link{R6Class}}.
-}
+\title{Set a Period and Get its Time Interval}
 \description{
-Set a Period
+Set a Period and Get its Time Interval
 
-Set a Period
+Set a Period and Get its Time Interval
+}
+\details{
+An Object of \code{\link{R6Class}} with methods to set
+common time periods and specifications for time periods.
 }
 \keyword{date}
 \keyword{time}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{.interval}}{Stores a time interval.}
+
+\item{\code{.negative}}{If `TRUE`, a time period is negative.}
+
+\item{\code{approximate}}{If `TRUE`, a time period is approximate.}
+
+\item{\code{uncertain}}{If `TRUE`, a time period is uncertain.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{interval}}{Stores a time interval.}
+\item{\code{.interval}}{Stores a time interval.}
+
+\item{\code{.negative}}{If `TRUE`, a time period is negative.}
 }
 \if{html}{\out{</div>}}
 }
@@ -34,26 +49,90 @@ Set a Period
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
+Helper function to specify a time period.
+
+
+Convert and return a time interval.
+
+
+Create a time period.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Period$new(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Numerical scalars or objects of class \code{Period}.}
+
+\item{\code{x}}{A numerical scalar. The range of valid values
+depends on \code{type}. If \code{type} is \code{"early"},
+\code{"mid"}, or \code{"late"}, \code{x} is ignored.}
+
+\item{\code{type}}{A character scalar. The following values
+are supported: \code{"early"}, \code{"mid"}, \code{"late"},
+\code{"quarter"}, \code{"third"}, and \code{"half"}. If
+\code{type} is `NULL`, \code{x} defines a year or decade.}
+
+\item{\code{ignore_errors}}{If `TRUE`, error messages are ignored.}
+
+\item{\code{value}}{A time interval.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Object of \code{\link{R6Class}} with methods to set
+common time periods and specifications for time periods.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-set_fuzzy"></a>}}
 \subsection{Method \code{set_fuzzy()}}{
+Set fuzzy markers for a time period.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Period$set_fuzzy(x)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{A character vector.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Object of \code{\link{R6Class}} with methods to set
+common time periods and specifications for time periods.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-take"></a>}}
 \subsection{Method \code{take()}}{
+Specify a period.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Period$take(x = NA, type = NA)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Period$take(x = NA, type = NA, ignore_errors = FALSE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{A numerical scalar. The range of valid values
+depends on \code{type}. If \code{type} is \code{"early"},
+\code{"mid"}, or \code{"late"}, \code{x} is ignored.}
+
+\item{\code{type}}{A character scalar. The following values
+are supported: \code{"early"}, \code{"mid"}, \code{"late"},
+\code{"quarter"}, \code{"third"}, and \code{"half"}. If
+\code{type} is `NULL`, \code{x} defines a year or decade.}
+
+\item{\code{ignore_errors}}{If `TRUE`, error messages are ignored.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Object of \code{\link{R6Class}} with methods to set
+common time periods and specifications for time periods.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
