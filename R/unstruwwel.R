@@ -4,16 +4,23 @@
 #'
 #' @param x Input vector. Either a character vector, or something
 #' coercible to one.
-#' @param midas If `TRUE`, input vector was standardized using MIDAS
+#' @param language Language code of the input vector as defined in
+#' ISO 639-1. If \code{NULL}, language is detected automatically.
+#' @param midas If \code{TRUE}, input was standardized using MIDAS
 #' (Marburger Informations-, Dokumentations- und Administrations-
 #' System). See \url{https://doi.org/10.11588/artdok.00003770}.
-#' @param language Language code of the input vector as defined in
-#' ISO 639-1. If `NULL`, language is detected automatically.
-#' @param verbose If `TRUE`, additional diagnostics are printed.
-#' @return A named list of vectors.
+#' @param verbose If \code{TRUE}, additional diagnostics are printed.
+#' @param scheme Scheme code of the output list. Either \code{ISO 8601},
+#' \code{interval}, or \code{object}.
+#' @param fuzzify A numerical vector of length 2 to extend the interval
+#' of approximate or uncertain time periods. This is only applied if
+#' \code{scheme == "interval"}.
+#'
+#' @return A named list of vectors or objects of \code{\link{R6Class}}.
 #'
 #' @examples
 #' unstruwwel("1. Hälfte 19. Jahrhundert", language = "de")
+#' unstruwwel("circa between 1901 and 1905", language = "en")
 #'
 #' @note Although multiple languages can be detected, only dominant
 #' ones are ultimately set.
@@ -23,13 +30,19 @@
 #'
 #' @rdname unstruwwel
 #' @export
-unstruwwel <- function(x, midas = FALSE, language = NULL, verbose = TRUE) {
-  x <- unlist(x); language <- unlist(language)
+unstruwwel <- function(x, language = NULL, midas = FALSE, verbose = TRUE,
+    scheme = "interval", fuzzify = c(0, 0)
+) {
+  x <- unlist(x); scheme <- tolower(scheme)
+  language <- unlist(language, recursive = TRUE)
 
   assertthat::assert_that(is.vector(x))
   assertthat::assert_that(is.logical(midas))
-  assertthat::assert_that(is.vector(language))
   assertthat::assert_that(is.logical(verbose))
+
+  assertthat::assert_that(is.numeric(fuzzify), length(fuzzify) == 2)
+  assertthat::assert_that(is.vector(language), is.character(language))
+  assertthat::assert_that(scheme %in% c("iso 8601", "interval", "object"))
 
   if (!guess_midas(x, midas = midas, verbose = verbose)) {
     if (is.null(language)) language <- guess_language(x, verbose)
@@ -42,10 +55,12 @@ unstruwwel <- function(x, midas = FALSE, language = NULL, verbose = TRUE) {
     )
 
     dates <- standardize_vector(x, language, "\\.(?=[^0-9]|$)") %>%
-      extract_groups() %>% map(get_dates, language = language)
+      extract_groups() %>% map(get_dates, scheme, fuzzify)
   } else {
     dates <- map(x, convert_midas) # language-independent
   }
+
+  names(dates) <- x
 
   return(dates)
 }
@@ -65,9 +80,14 @@ standardize_vector <- function(x, language, remove = NULL) {
   replacements <- bind_rows(language$replacements) %>%
     filter(.data$before != .data$after) %>% distinct()
 
+  simplification <- bind_rows(language$simplifications)
+
   x <- utf8::utf8_normalize(x) %>% str_squish() %>%
     str_replace_all(
       set_names(replacements$after, replacements$pattern)
+    ) %>%
+    str_replace_all(
+      set_names(simplification$after, simplification$pattern)
     )
 
   return(x)
@@ -75,7 +95,7 @@ standardize_vector <- function(x, language, remove = NULL) {
 
 #' @importFrom stringr str_extract_all
 extract_groups <- function(x) {
-  capture_groups <- "([0-9]+)|(\\p{L}+)"
+  capture_groups <- "([0-9]+)|(\\p{L}+)|(\\?)"
   x <- str_extract_all(x, capture_groups)
 
   return(x)

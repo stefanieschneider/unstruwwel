@@ -19,7 +19,17 @@ get_current_year <- function() {
 }
 
 is_year <- function(x) {
-  return(x %in% 1000:get_current_year())
+  test <- as.character(1000:get_current_year())
+
+  return(as.character(x) %in% test)
+}
+
+is_year_addition <- function(x) {
+  return(as.character(x) %in% as.character(1:999))
+}
+
+is_number <- function(x) {
+  return(suppressWarnings(!is.na(as.numeric(x))))
 }
 
 is_season <- function(x) {
@@ -55,4 +65,8 @@ is_or <- function(x) {
 
 is_and <- function(x) {
   return(x %in% c("and", "/"))
+}
+
+get_item <- function(x, n = 1) {
+  return(x[[1]][[n]])
 }

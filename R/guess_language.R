@@ -73,6 +73,7 @@ sample_text <- function(x, n = 100) {
 #' @importFrom tibble rowid_to_column
 #' @importFrom purrr map set_names
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 count_per_language <- function(x, text) {
   x <- map(
       x$replacements, ~ count_language(
@@ -80,7 +81,7 @@ count_per_language <- function(x, text) {
       )
     ) %>%
     set_names(x$name) %>% bind_rows() %>%
-    rowid_to_column("id") %>% group_by(id)
+    rowid_to_column("id") %>% group_by(.data$id)
 
   return(x)
 }

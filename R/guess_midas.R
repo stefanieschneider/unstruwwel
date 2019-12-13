@@ -19,8 +19,8 @@ guess_midas <- function(x, midas = FALSE, verbose = TRUE) {
         "MIDAS. Do you want to proceed with MIDAS?"
       )
 
-      input <- utils::menu(c("Yes", "No"), title = text)
-      if (input == 1) midas <- TRUE
+      # input <- utils::menu(c("Yes", "No"), title = text)
+      # if (input == 1) midas <- TRUE
     } else if (verbose) {
       message(
         "Please check if input vector might have been ",

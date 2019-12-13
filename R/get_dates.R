@@ -1,56 +1,112 @@
-get_dates <- function(x, language) {
-  x <- simplify(x, language = language)
+get_dates <- function(x, scheme, fuzzify) {
+  markers <- sort(c(which(x == "century"), which(is_year(x))))
 
-  return(x)
-}
+  if (length(markers) > 0) {
+    if (length(markers) < length(x)) {
+      test <- which(is_year_addition(x), useNames = FALSE)
+      test <- (markers + 1) %in% c(test, "s")
 
-#' @importFrom stringr str_replace_all
-#' @importFrom dplyr filter bind_rows
-#' @importFrom purrr set_names
-#' @importFrom rlang .data
-simplify <- function(x, language) {
-  language <- filter(get("languages"), .data$name %in% language)
+      markers <- c(0, ifelse(test, markers + 1, markers))
+      markers <- markers[markers < length(x)]
 
-  replacements <- bind_rows(language$simplifications)
-  y <- set_names(replacements$after, replacements$pattern)
+      if (markers[length(markers)] == 1) markers <- markers[1]
 
-  return(str_replace_all(x, y))
-}
+      x <- Map(
+        function(i, j) get_intervals(x, start = i, end = j),
+        markers + 1, cumsum(diff(c(markers, length(x))))
+      )
+    } else {
+      x <- list(get_period(x, uncertain = FALSE))
+    }
 
-build_century <- function(x, index = -1) {
-  if (index > - 1) {
-    x <- x[(index - 10):index]
-    x <- x[!is.na(x)]
-  }
+    if (scheme == "interval")
+      x <- get_period(x)$interval + fuzzify
 
-  if ("and" %in% x) {
-    and <- which(x == "and")[1]
-
-    y <- get_century(x[1:(and - 1)])
-    x <- get_century(x[(and + 1):length(x)])
-
-    x <- Period$new(x, y)
+    # TODO: if (scheme == "iso 8601")
   } else {
-    x <- get_century(x)
+    if (scheme == "object") x <- NA else x <- c(NA, NA)
+  }
+
+  if (is.list(x)) return(x) else return(list(x))
+}
+
+get_intervals <- function(x, start = 1, end = -1) {
+  test <- x[min(end + 1, length(x))] == "?"
+  uncertain <- ifelse(test, TRUE, FALSE)
+
+  number <- which(is_number(x[1:end]), FALSE)
+  y <- x[start:number[length(number)]]; y <- y[y != "?"]
+
+  if ("century" %in% x[start:end]) {
+    x <- build_century(y, uncertain = uncertain)
+  } else if (x[end] == "s") {
+    x <- get_decade(y, uncertain = uncertain)
+  } else if (nchar(y[length(y)]) < 4) {
+    x <- get_period(y, uncertain = uncertain)
+  } else {
+    x <- get_year(y, uncertain = uncertain)
   }
 
   return(x)
 }
 
-get_century <- function(x) {
-  x_take <- c(x[length(x) - 2], x[length(x) - 1])
-  x_date <- Century$new(x[length(x)])$set_fuzzy(x)
+build_century <- function(x, uncertain = FALSE) {
+  markers <- c(0, which(x == "and", useNames = FALSE) - 1)
 
-  return(x_date$take(x_take))
+  x <- Map(
+    function(i, j) get_century(x[i:j]),
+    markers + 1, cumsum(diff(c(markers, length(x))))
+  )
+
+  if (length(x) > 1) x <- Period$new(x)
+  if (uncertain) x$fuzzy <- -1
+
+  return(x)
 }
 
-build_decade <- function(x, index) {
+get_century <- function(x, uncertain = FALSE) {
+  if (uncertain) x <- c("?", x, use.names = FALSE)
+  x <- x[max(1, length(x) - 5):length(x)]
 
+  x_take <- c(x[length(x) - 2], x[length(x) - 1])
+  x_date <- Century$new(x[length(x)])$set_additions(x)
+
+  return(x_date$take(x_take, ignore_errors = TRUE))
 }
 
-get_decade <- function(x) {
-  x_take <- c(x[length(x) - 2], x[length(x) - 1])
-  x_date <- Decade$new(x[length(x)])$set_fuzzy(x)
+get_decade <- function(x, uncertain = FALSE) {
+  if (uncertain) x <- c("?", x, use.names = FALSE)
+  x <- x[max(1, length(x) - 5):length(x)]
 
-  return(x_date$take(x_take))
+  x_take <- c(x[length(x) - 2], x[length(x) - 1])
+  x_date <- Decade$new(x[length(x)])$set_additions(x)
+
+  return(x_date$take(x_take, ignore_errors = TRUE))
+}
+
+get_period <- function(x, uncertain = FALSE) {
+  if (uncertain) x <- c("?", x, use.names = FALSE)
+  x <- x[max(1, length(x) - 5):length(x)]
+
+  if (length(x) > 1) {
+    y <- as.character(rev(x)[1:2]); n_char <- nchar(y)
+
+    if (n_char[1] < n_char[2]) {
+      add_char <- substr(y[2], 1, n_char[2] - n_char[1])
+      x[length(x)] <- paste0(add_char, y[1])
+    }
+  }
+
+  x_date <- Period$new(x)$set_additions(x)
+
+  return(x_date)
+}
+
+get_year <- function(x, uncertain = FALSE) {
+  if (uncertain) x <- c("?", x, use.names = FALSE)
+  x <- x[max(1, length(x) - 5):length(x)]
+
+  x_date <- Year$new(x[length(x)])$set_additions(x)
+
+  return(x_date)
 }

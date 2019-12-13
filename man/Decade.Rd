@@ -35,7 +35,7 @@ common time periods and specifications for decades.
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="unstruwwel" data-topic="Period" data-id="set_fuzzy">}\href{../../unstruwwel/html/Period.html#method-set_fuzzy}{\code{unstruwwel::Period$set_fuzzy()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="unstruwwel" data-topic="Period" data-id="set_additions">}\href{../../unstruwwel/html/Period.html#method-set_additions}{\code{unstruwwel::Period$set_additions()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="unstruwwel" data-topic="Period" data-id="take">}\href{../../unstruwwel/html/Period.html#method-take}{\code{unstruwwel::Period$take()}}\out{</span>}
 }
 \out{</details>}
@@ -54,13 +54,16 @@ Helper function to specify the end of a decade.
 
 Create a decade.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Decade$new(value)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Decade$new(value, official_def = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{value}}{A numerical scalar.}
+
+\item{\code{official_def}}{If `TRUE`, the official definition that
+begins with the year 1 is used.}
 }
 \if{html}{\out{</div>}}
 }

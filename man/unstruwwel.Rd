@@ -4,23 +4,37 @@
 \alias{unstruwwel}
 \title{Detect and Parse Historic Dates}
 \usage{
-unstruwwel(x, midas = FALSE, language = NULL, verbose = TRUE)
+unstruwwel(
+  x,
+  language = NULL,
+  midas = FALSE,
+  verbose = TRUE,
+  scheme = "interval",
+  fuzzify = c(0, 0)
+)
 }
 \arguments{
 \item{x}{Input vector. Either a character vector, or something
 coercible to one.}
 
-\item{midas}{If `TRUE`, input vector was standardized using MIDAS
+\item{language}{Language code of the input vector as defined in
+ISO 639-1. If \code{NULL}, language is detected automatically.}
+
+\item{midas}{If \code{TRUE}, input was standardized using MIDAS
 (Marburger Informations-, Dokumentations- und Administrations-
 System). See \url{https://doi.org/10.11588/artdok.00003770}.}
 
-\item{language}{Language code of the input vector as defined in
-ISO 639-1. If `NULL`, language is detected automatically.}
+\item{verbose}{If \code{TRUE}, additional diagnostics are printed.}
 
-\item{verbose}{If `TRUE`, additional diagnostics are printed.}
+\item{scheme}{Scheme code of the output list. Either \code{ISO 8601},
+\code{interval}, or \code{object}.}
+
+\item{fuzzify}{A numerical vector of length 2 to extend the interval
+of approximate or uncertain time periods. This is only applied if
+\code{scheme == "interval"}.}
 }
 \value{
-A named list of vectors.
+A named list of vectors or objects of \code{\link{R6Class}}.
 }
 \description{
 Detect and Parse Historic Dates, e.g., to ISO 8601:2-2019.
@@ -31,5 +45,6 @@ ones are ultimately set.
 }
 \examples{
 unstruwwel("1. Hälfte 19. Jahrhundert", language = "de")
+unstruwwel("circa between 1901 and 1905", language = "en")
 
 }

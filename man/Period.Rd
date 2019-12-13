@@ -22,9 +22,9 @@ common time periods and specifications for time periods.
 
 \item{\code{.negative}}{If `TRUE`, a time period is negative.}
 
-\item{\code{approximate}}{If `TRUE`, a time period is approximate.}
+\item{\code{fuzzy}}{Either `-1` (approximate) or `1` (uncertain).}
 
-\item{\code{uncertain}}{If `TRUE`, a time period is uncertain.}
+\item{\code{express}}{Either `-1` (before) or `1` (after).}
 }
 \if{html}{\out{</div>}}
 }
@@ -34,6 +34,8 @@ common time periods and specifications for time periods.
 \item{\code{.interval}}{Stores a time interval.}
 
 \item{\code{.negative}}{If `TRUE`, a time period is negative.}
+
+\item{\code{interval}}{Convert and return a time interval.}
 }
 \if{html}{\out{</div>}}
 }
@@ -41,7 +43,7 @@ common time periods and specifications for time periods.
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{Period$new()}}
-\item \href{#method-set_fuzzy}{\code{Period$set_fuzzy()}}
+\item \href{#method-set_additions}{\code{Period$set_additions()}}
 \item \href{#method-take}{\code{Period$take()}}
 \item \href{#method-clone}{\code{Period$clone()}}
 }
@@ -50,9 +52,6 @@ common time periods and specifications for time periods.
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
 Helper function to specify a time period.
-
-
-Convert and return a time interval.
 
 
 Create a time period.
@@ -75,22 +74,16 @@ are supported: \code{"early"}, \code{"mid"}, \code{"late"},
 \code{type} is `NULL`, \code{x} defines a year or decade.}
 
 \item{\code{ignore_errors}}{If `TRUE`, error messages are ignored.}
-
-\item{\code{value}}{A time interval.}
 }
 \if{html}{\out{</div>}}
 }
-\subsection{Returns}{
-Object of \code{\link{R6Class}} with methods to set
-common time periods and specifications for time periods.
-}
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_fuzzy"></a>}}
-\subsection{Method \code{set_fuzzy()}}{
-Set fuzzy markers for a time period.
+\if{html}{\out{<a id="method-set_additions"></a>}}
+\subsection{Method \code{set_additions()}}{
+Set additions for a time period.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Period$set_fuzzy(x)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Period$set_additions(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -99,10 +92,6 @@ Set fuzzy markers for a time period.
 \item{\code{x}}{A character vector.}
 }
 \if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Object of \code{\link{R6Class}} with methods to set
-common time periods and specifications for time periods.
 }
 }
 \if{html}{\out{<hr>}}

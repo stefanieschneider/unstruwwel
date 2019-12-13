@@ -58,15 +58,16 @@ Period <- R6Class(
   ),
 
   active = list(
-    #' @description
-    #' Convert and return a time interval.
-    #'
-    #' @param value A time interval.
+    #' @field interval Convert and return a time interval.
     interval = function(value) {
       if (missing(value)) {
         negative <- ifelse(private$.negative, -1, 1)
+        x <- sort(private$.interval * negative)
 
-        return(sort(private$.interval * negative))
+        if (self$express < 0) x[1] <- -Inf
+        if (self$express > 0) x[2] <- Inf
+
+        return(x)
       } else {
         stop("`$interval` is read only.", FALSE)
       }
@@ -74,26 +75,33 @@ Period <- R6Class(
   ),
 
   public = list(
-    #' @field approximate If `TRUE`, a time period is approximate.
-    approximate = FALSE,
+    #' @field fuzzy Either `-1` (approximate) or `1` (uncertain).
+    fuzzy = 0,
 
-    #' @field uncertain If `TRUE`, a time period is uncertain.
-    uncertain = FALSE,
+    #' @field express Either `-1` (before) or `1` (after).
+    express = 0,
 
     #' @description
     #' Create a time period.
     #'
     #' @param ... Numerical scalars or objects of class \code{Period}.
-    #'
-    #' @return Object of \code{\link{R6Class}} with methods to set
-    #' common time periods and specifications for time periods.
     initialize = function(...) {
       withCallingHandlers({
-        x <- lapply(list(...), function(x) {
+        x <- unlist(list(...), recursive = TRUE)
+
+        fuzzy <- lapply(x, function(x) {
+          if ("Period" %in% class(x)) x$fuzzy
+        })
+
+        express <- lapply(x, function(x) {
+          if ("Period" %in% class(x)) x$express
+        })
+
+        x <- lapply(x, function(x) {
           if ("Period" %in% class(x)) x$interval else x
         })
 
-        x <- unlist(x, FALSE, use.names = FALSE)
+        x <- unlist(x, recursive = FALSE, use.names = FALSE)
         x <- c(na.omit(as.integer(x)), recursive = TRUE)
 
         assertthat::assert_that(length(x) > 0)
@@ -101,17 +109,14 @@ Period <- R6Class(
         if (max(x) < 0) private$.negative <- TRUE
         private$.interval <- c(min(x), c(max(x)))
 
-        approximate <- lapply(list(...), function(x) {
-          if ("Period" %in% class(x)) x$approximate
-        })
+        if (length(unlist(fuzzy)) > 0) {
+          if (any(unlist(fuzzy) < 0)) self$fuzzy <- -1
+          if (any(unlist(fuzzy) > 0)) self$fuzzy <- 1
+        }
 
-        uncertain <- lapply(list(...), function(x) {
-          if ("Period" %in% class(x)) x$uncertain
-        })
-
-        if (length(unlist(uncertain)) > 0) {
-          self$approximate <- any(unlist(approximate))
-          self$uncertain <- any(unlist(uncertain))
+        if (length(unlist(express)) > 0) {
+          if (any(unlist(express) < 0)) self$express <- -1
+          if (any(unlist(express) > 0)) self$express <- 1
         }
       }, warning = function(event) {
         invokeRestart("muffleWarning")
@@ -119,15 +124,15 @@ Period <- R6Class(
     },
 
     #' @description
-    #' Set fuzzy markers for a time period.
+    #' Set additions for a time period.
     #'
     #' @param x A character vector.
-    #'
-    #' @return Object of \code{\link{R6Class}} with methods to set
-    #' common time periods and specifications for time periods.
-    set_fuzzy = function(x) {
-      self$approximate <- any(c("approximate", "?") %in% x)
-      self$uncertain <- any(c("uncertain") %in% x)
+    set_additions = function(x) {
+      if (any(c("approximate", "?") %in% x)) self$fuzzy <- -1
+      if (any(c("uncertain") %in% x)) self$fuzzy <- 1
+
+      if ("before" %in% x) self$express <- -1
+      if ("after" %in% x) self$express <- 1
 
       return(self)
     },
@@ -147,35 +152,35 @@ Period <- R6Class(
     #' @return Object of \code{\link{R6Class}} with methods to set
     #' common time periods and specifications for time periods.
     take = function(x = NA, type = NA, ignore_errors = FALSE) {
-      tryCatch({
-        if (length(x) == 2) type <- x[2]; x <- x[1]
-        if (!is.na(x) & x != "last") x <- as.numeric(x)
+      suppressWarnings({
+        tryCatch({
+          if (length(x) == 2) type <- x[2]; x <- x[1]
+          if (!is.na(x) & x != "last") x <- as.numeric(x)
 
-        assertthat::assert_that(length(type) == 1)
-        type <- tolower(as.character(type))
+          assertthat::assert_that(length(type) == 1)
+          type <- tolower(as.character(type))
 
-        interval <- switch(type,
-          early = private$.take_early(),
-          late = private$.take_late(),
-          mid = private$.take_mid(),
+          interval <- switch(type,
+            early = private$.take_early(),
+            late = private$.take_late(),
+            mid = private$.take_mid(),
 
-          private$.take_period(x, type)
-        )
+            private$.take_period(x, type)
+          )
 
-        negative <- ifelse(private$.negative, -1, 1)
+          negative <- ifelse(private$.negative, -1, 1)
 
-        interval <- sort(interval * negative)
-        new_period <- Period$new(interval)
+          interval <- sort(interval * negative)
+          new_period <- Period$new(interval)
 
-        new_period$approximate <- self$approximate
-        new_period$uncertain <- self$uncertain
+          new_period$fuzzy <- self$fuzzy
+          new_period$express <- self$express
 
-        return(new_period)
-      }, warning = function(event) {
-        invokeRestart("muffleWarning")
-      }, error = function(event) {
-        if (!ignore_errors) stop(event)
-        else return(self)
+          return(new_period)
+        }, error = function(event) {
+          if (!ignore_errors) stop(event)
+          else return(self)
+        })
       })
     }
   )

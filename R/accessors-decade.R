@@ -57,10 +57,12 @@ Decade <- R6Class(
     #' Create a decade.
     #'
     #' @param value A numerical scalar.
+    #' @param official_def If `TRUE`, the official definition that
+    #' begins with the year 1 is used.
     #'
     #' @return Object of \code{\link{R6Class}} with methods to set
     #' common time periods and specifications for decades.
-    initialize = function(value) {
+    initialize = function(value, official_def = FALSE) {
       if (is.character(value)) value <- as.numeric(value)
 
       assertthat::assert_that(
@@ -75,9 +77,10 @@ Decade <- R6Class(
         value <- abs(value) * 10 + 1
       }
 
-      private$.interval <- c(
-        abs(value), abs(value) + 9
-      )
+      private$.interval <- c(abs(value), abs(value) + 9)
+
+      if (official_def)
+        private$.interval <- private$.interval + 1
     }
   )
 )
