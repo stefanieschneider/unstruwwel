@@ -33,18 +33,6 @@ guess_language <- function(x, verbose = TRUE) {
       filter(.data$value > max(.data$value) / 2)
   }
 
-  if (nrow(language) == 0) {
-    if (interactive()) {
-      text <- paste(
-        "Language could not be detected with certainty.",
-        "Do you want to proceed with English?"
-      )
-
-      input <- utils::menu(c("Yes", "No"), title = text)
-      if (input == 1) language <- "en"
-    }
-  }
-
   assertthat::assert_that(
     nrow(language) > 0, msg = "Language could not be detected."
   )

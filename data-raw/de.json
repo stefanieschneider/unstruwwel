@@ -168,7 +168,9 @@
     	"viertel"
     ],
     "last": [
-    	"letztes"
+    	"letztes",
+        "letztem",
+        "letzten"
     ],
     "century": [
     	"jahrhunderts",

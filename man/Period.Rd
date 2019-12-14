@@ -36,6 +36,8 @@ common time periods and specifications for time periods.
 \item{\code{.negative}}{If `TRUE`, a time period is negative.}
 
 \item{\code{interval}}{Convert and return a time interval.}
+
+\item{\code{text}}{Convert and return a text in ISO 8601.}
 }
 \if{html}{\out{</div>}}
 }

@@ -18,7 +18,14 @@ Year <- R6Class(
   inherit = Period,
 
   private = list(
+    #' @field .season Stores a season.
+    .season = NA_integer_,
 
+    #' @field .month Stores a month.
+    .month = NA_integer_,
+
+    #' @field .day Stores a day.
+    .day = NA_integer_
   ),
 
   public = list(
@@ -38,7 +45,7 @@ Year <- R6Class(
       )
 
       if (value < 0) private$.negative <- TRUE
-      private$.interval <- c(value, value)
+      private$.interval <- c(abs(value), abs(value))
     }
   )
 )

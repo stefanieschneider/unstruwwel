@@ -79,7 +79,7 @@ Decade <- R6Class(
 
       private$.interval <- c(abs(value), abs(value) + 9)
 
-      if (official_def)
+      if (official_def && value %% 10 == 0)
         private$.interval <- private$.interval + 1
     }
   )

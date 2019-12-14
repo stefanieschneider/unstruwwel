@@ -9,6 +9,7 @@ test_that("positive decade", {
   expect_equal(Decade$new("19")$interval, c(191, 200))
   expect_equal(Decade$new(197)$interval, c(1971, 1980))
   expect_equal(Decade$new(1970)$interval, c(1970, 1979))
+  expect_equal(Decade$new(1950, TRUE)$interval, c(1951, 1960))
 })
 
 test_that("negative decade", {

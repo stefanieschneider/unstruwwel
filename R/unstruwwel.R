@@ -80,14 +80,11 @@ standardize_vector <- function(x, language, remove = NULL) {
   replacements <- bind_rows(language$replacements) %>%
     filter(.data$before != .data$after) %>% distinct()
 
-  simplification <- bind_rows(language$simplifications)
+  # simplification <- bind_rows(language$simplifications)
 
   x <- utf8::utf8_normalize(x) %>% str_squish() %>%
     str_replace_all(
       set_names(replacements$after, replacements$pattern)
-    ) %>%
-    str_replace_all(
-      set_names(simplification$after, simplification$pattern)
     )
 
   return(x)

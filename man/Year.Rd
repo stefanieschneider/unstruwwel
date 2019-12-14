@@ -25,6 +25,28 @@ common time periods and specifications for years.
 \section{Super class}{
 \code{\link[unstruwwel:Period]{unstruwwel::Period}} -> \code{Year}
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{.season}}{Stores a season.}
+
+\item{\code{.month}}{Stores a month.}
+
+\item{\code{.day}}{Stores a day.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{.season}}{Stores a season.}
+
+\item{\code{.month}}{Stores a month.}
+
+\item{\code{.day}}{Stores a day.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{

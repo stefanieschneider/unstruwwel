@@ -101,10 +101,12 @@
         "day",
         "days"
     ],
-    "approximate": [
+    "uncertain": [
         "probably",
         "perhaps",
-        "about",
+        "about"
+    ],
+    "approximate": [
         "circa",
         "ca"
     ],
@@ -150,6 +152,8 @@
     ],
     "stop_words": [
         "the",
+        "st",
+        "nd",
         "a"
     ],
     "simplifications": {

@@ -71,6 +71,23 @@ Period <- R6Class(
       } else {
         stop("`$interval` is read only.", FALSE)
       }
+    },
+
+    #' @field text Convert and return a text in ISO 8601.
+    text = function(value) {
+      if (missing(value)) {
+        x <- unique(as.character(self$interval))
+
+        if (self$fuzzy < 0) x <- paste0(x, "~", collapse = NULL)
+        if (self$fuzzy > 0) x <- paste0(x, "?", collapse = NULL)
+
+        if (self$express < 0) x <- paste0("..", x[2], collapse = "")
+        if (self$express > 0) x <- paste0(x[1], "..", collapse = "")
+
+        return(paste(x, collapse = "/"))
+      } else {
+        stop("`$text` is read only.", FALSE)
+      }
     }
   ),
 

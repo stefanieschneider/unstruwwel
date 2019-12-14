@@ -19,12 +19,10 @@ get_dates <- function(x, scheme, fuzzify) {
       x <- list(get_period(x, uncertain = FALSE))
     }
 
-    if (scheme == "interval")
-      x <- get_period(x)$interval + fuzzify
-
-    # TODO: if (scheme == "iso 8601")
+    if (scheme == "interval") x <- get_period(x)$interval
+    if (scheme == "iso 8601") x <- get_period(x)$text
   } else {
-    if (scheme == "object") x <- NA else x <- c(NA, NA)
+    if (scheme == "interval") x <- c(NA, NA) else x <- NA
   }
 
   if (is.list(x)) return(x) else return(list(x))
@@ -32,14 +30,16 @@ get_dates <- function(x, scheme, fuzzify) {
 
 get_intervals <- function(x, start = 1, end = -1) {
   test <- x[min(end + 1, length(x))] == "?"
-  uncertain <- ifelse(test, TRUE, FALSE)
 
+  uncertain <- ifelse(test, TRUE, FALSE)
   number <- which(is_number(x[1:end]), FALSE)
+
   y <- x[start:number[length(number)]]; y <- y[y != "?"]
+  next_char <- min(max(number) + 1, length(x))
 
   if ("century" %in% x[start:end]) {
     x <- build_century(y, uncertain = uncertain)
-  } else if (x[end] == "s") {
+  } else if (x[next_char] == "s") {
     x <- get_decade(y, uncertain = uncertain)
   } else if (nchar(y[length(y)]) < 4) {
     x <- get_period(y, uncertain = uncertain)

@@ -1,11 +1,3 @@
-#' @importFrom utf8 utf8_normalize
-normalize <- function(x) {
-  result <- purrr::set_names(x, utf8_normalize(colnames(x))) %>%
-    dplyr::mutate_if(is.character, list(~ utf8_normalize(.)))
-
-  return(result)
-}
-
 is_valid_language <- function(x) {
   return(all(x %in% get("languages")$name))
 }
@@ -57,14 +49,6 @@ is_day <- function(x) {
   )
 
   return(x %in% days)
-}
-
-is_or <- function(x) {
-  return(x %in% c("or"))
-}
-
-is_and <- function(x) {
-  return(x %in% c("and", "/"))
 }
 
 get_item <- function(x, n = 1) {
