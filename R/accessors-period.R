@@ -114,7 +114,9 @@ Periods <- R6Class(
         if (year(int_end(self$interval)) == 9999)
           x <- paste(x[1], "..",sep = "", collapse = "")
 
-        return(paste(sprintf("%010s", x), collapse = "/"))
+        x <- stringr::str_pad(x, width = 10, pad = "0")
+
+        return(paste(x, collapse = "/"))
       } else {
         stop("`$text` is read only.", FALSE)
       }
