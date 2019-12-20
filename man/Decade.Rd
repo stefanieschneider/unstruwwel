@@ -15,15 +15,13 @@ common time periods and specifications for decades.
 }
 \examples{
 \donttest{
-  x <- Decade$new(1520)
-  x$take(1, type = "half")
+x <- Decade$new(1520)
+x$take(1, type = "half")
 }
 
 }
-\keyword{date}
-\keyword{time}
 \section{Super class}{
-\code{\link[unstruwwel:Period]{unstruwwel::Period}} -> \code{Decade}
+\code{\link[unstruwwel:Periods]{unstruwwel::Periods}} -> \code{Decade}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -35,8 +33,8 @@ common time periods and specifications for decades.
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="unstruwwel" data-topic="Period" data-id="set_additions">}\href{../../unstruwwel/html/Period.html#method-set_additions}{\code{unstruwwel::Period$set_additions()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="unstruwwel" data-topic="Period" data-id="take">}\href{../../unstruwwel/html/Period.html#method-take}{\code{unstruwwel::Period$take()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="unstruwwel" data-topic="Periods" data-id="set_additions">}\href{../../unstruwwel/html/Periods.html#method-set_additions}{\code{unstruwwel::Periods$set_additions()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="unstruwwel" data-topic="Periods" data-id="take">}\href{../../unstruwwel/html/Periods.html#method-take}{\code{unstruwwel::Periods$take()}}\out{</span>}
 }
 \out{</details>}
 }

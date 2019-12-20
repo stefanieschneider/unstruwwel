@@ -9,7 +9,7 @@ unstruwwel(
   language = NULL,
   midas = FALSE,
   verbose = TRUE,
-  scheme = "interval",
+  scheme = "time-span",
   fuzzify = c(0, 0)
 )
 }
@@ -26,12 +26,12 @@ System). See \url{https://doi.org/10.11588/artdok.00003770}.}
 
 \item{verbose}{If \code{TRUE}, additional diagnostics are printed.}
 
-\item{scheme}{Scheme code of the output list. Either \code{ISO 8601},
-\code{interval}, or \code{object}.}
+\item{scheme}{Scheme code of the output list. Either \code{time-span},
+\code{iso-format}, or \code{object}.}
 
 \item{fuzzify}{A numerical vector of length 2 to extend the interval
 of approximate or uncertain time periods. This is only applied if
-\code{scheme == "interval"}.}
+\code{scheme == "time-span"}.}
 }
 \value{
 A named list of vectors or objects of \code{\link{R6Class}}.
@@ -44,7 +44,9 @@ Although multiple languages can be detected, only dominant
 ones are ultimately set.
 }
 \examples{
+\donttest{
 unstruwwel("1. Hälfte 19. Jahrhundert", language = "de")
 unstruwwel("circa between 1901 and 1905", language = "en")
+}
 
 }

@@ -5,50 +5,65 @@
 #'
 #' @examples
 #' \donttest{
-#'   x <- Century$new(15)
-#'   x$take(2, type = "third")
+#' x <- Century$new(15)
+#' x$take(2, type = "third")
 #' }
 #'
-#' @keywords date time
 #' @docType class
-#'
 #' @importFrom R6 R6Class
+#'
+#' @importFrom lubridate interval ymd years days
+#' @importFrom lubridate int_standardize int_start int_end
 Century <- R6Class(
   classname = "Century",
-  inherit = Period,
+  inherit = Periods,
 
   private = list(
     #' @description
     #' Helper function to specify the beginning of a century.
     .take_early = function() {
-      interval <- c(
-        private$.interval[1],
-        private$.interval[1] + 14
-      )
+      if (int_start(private$.interval) < ymd("0000-01-01")) {
+        y <- c(
+          int_start(private$.interval) + years(85),
+          int_end(private$.interval) - years(0)
+        )
+      } else {
+        y <- c(
+          int_start(private$.interval) + years(0),
+          int_end(private$.interval) - years(85)
+        )
+      }
 
-      return(interval)
+      return(interval(y[1], y[2]))
     },
 
     #' @description
     #' Helper function to specify the middle of a century.
     .take_mid = function() {
-      interval <- c(
-        private$.interval[1] + 45,
-        private$.interval[2] - 45
+      y <- c(
+        int_start(private$.interval) + years(45),
+        int_end(private$.interval) - years(45)
       )
 
-      return(interval)
+      return(interval(y[1], y[2]))
     },
 
     #' @description
     #' Helper function to specify the end of a century.
     .take_late = function() {
-      interval <- c(
-        private$.interval[2] - 14,
-        private$.interval[2]
-      )
+      if (int_start(private$.interval) < ymd("0000-01-01")) {
+        y <- c(
+          int_start(private$.interval) + years(0),
+          int_end(private$.interval) - years(85)
+        )
+      } else {
+        y <- c(
+          int_start(private$.interval) + years(85),
+          int_end(private$.interval) - years(0)
+        )
+      }
 
-      return(interval)
+      return(interval(y[1], y[2]))
     }
   ),
 
@@ -65,19 +80,20 @@ Century <- R6Class(
 
       assertthat::assert_that(
         length(value) == 1 && floor(value) == value,
-        value < 22 || is_year(value)
+        value < 22 && nchar(abs(value)) < 3
       )
 
-      if (value < 0) private$.negative <- TRUE
+      if (value < 0) {
+        value <- sprintf("%02d01", abs(value + 1))
 
-      if (is_year(value)) {
-        value <- stringr::str_sub(value, end = 2)
-        value <- as.integer(value) + 1
+        x <- ymd("0000-01-01") - years(value)
+        x <- interval(x, x - years(98) - days(1))
+      } else {
+        x <- ymd(sprintf("%02d01-01-01", value - 1))
+        x <- interval(x, x + years(100) - days(1))
       }
 
-      private$.interval <- c(
-        abs(value) * 100 - 99, abs(value) * 100
-      )
+      private$.interval <- int_standardize(x)
     }
   )
 )

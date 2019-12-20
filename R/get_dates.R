@@ -15,17 +15,19 @@ get_dates <- function(x, scheme, fuzzify) {
         function(i, j) get_intervals(x, start = i, end = j),
         markers + 1, cumsum(diff(c(markers, length(x))))
       )
+
+      x[sapply(x, is.null)] <- NULL  # remove empty entries
     } else {
       x <- list(get_period(x, uncertain = FALSE))
     }
 
-    if (scheme == "interval") x <- get_period(x)$interval
-    if (scheme == "iso 8601") x <- get_period(x)$text
+    if (scheme == "time-span") x <- get_period(x)$time_span
+    if (scheme == "iso-format") x <- get_period(x)$iso_format
   } else {
-    if (scheme == "interval") x <- c(NA, NA) else x <- NA
+    if (scheme == "time-span") x <- c(NA, NA) else x <- NA
   }
 
-  if (is.list(x)) return(x) else return(list(x))
+  if (is.list(x)) return(unlist(x)) else return(list(x))
 }
 
 get_intervals <- function(x, start = 1, end = -1) {
@@ -34,39 +36,45 @@ get_intervals <- function(x, start = 1, end = -1) {
   uncertain <- ifelse(test, TRUE, FALSE)
   number <- which(is_number(x[1:end]), FALSE)
 
-  y <- x[start:number[length(number)]]; y <- y[y != "?"]
-  next_char <- min(max(number) + 1, length(x))
+  if (start <= number[length(number)]) {
+    y <- x[start:number[length(number)]]; y <- y[y != "?"]
+    next_char <- min(max(number) + 1, length(x))
 
-  if ("century" %in% x[start:end]) {
-    x <- build_century(y, uncertain = uncertain)
-  } else if (x[next_char] == "s") {
-    x <- get_decade(y, uncertain = uncertain)
-  } else if (nchar(y[length(y)]) < 4) {
-    x <- get_period(y, uncertain = uncertain)
-  } else {
-    x <- get_year(y, uncertain = uncertain)
+    if ("century" %in% x[start:end]) {
+      negative <- "bc" %in% x[max(end + 1, length(x))]
+      x <- build_century(y, negative, uncertain)
+    } else if (x[next_char] == "s") {
+      x <- get_decade(y, uncertain = uncertain)
+    } else if (nchar(y[length(y)]) < 4) {
+      x <- get_period(y, uncertain = uncertain)
+    } else {
+      x <- get_year(y, uncertain = uncertain)
+    }
+
+    return(x)
   }
-
-  return(x)
 }
 
-build_century <- function(x, uncertain = FALSE) {
+build_century <- function(x, negative, uncertain = FALSE) {
   markers <- c(0, which(x == "and", useNames = FALSE) - 1)
 
   x <- Map(
-    function(i, j) get_century(x[i:j]),
+    function(i, j) get_century(x[i:j], negative),
     markers + 1, cumsum(diff(c(markers, length(x))))
   )
 
-  if (length(x) > 1) x <- Period$new(x)
+  if (length(x) > 1) x <- Periods$new(x)
   if (uncertain) x$fuzzy <- -1
 
   return(x)
 }
 
-get_century <- function(x, uncertain = FALSE) {
+get_century <- function(x, negative, uncertain = FALSE) {
+  x <- x[max(1, length(x) - 4):length(x)]
+  if (length(x) < 5) x <- c(rep(NA, 4), x)
+
   if (uncertain) x <- c("?", x, use.names = FALSE)
-  x <- x[max(1, length(x) - 5):length(x)]
+  if (negative) x[length(x)] <- paste0("-", x[length(x)])
 
   x_take <- c(x[length(x) - 2], x[length(x) - 1])
   x_date <- Century$new(x[length(x)])$set_additions(x)
@@ -75,8 +83,10 @@ get_century <- function(x, uncertain = FALSE) {
 }
 
 get_decade <- function(x, uncertain = FALSE) {
+  x <- x[max(1, length(x) - 4):length(x)]
+  if (length(x) < 5) x <- c(rep(NA, 4), x)
+
   if (uncertain) x <- c("?", x, use.names = FALSE)
-  x <- x[max(1, length(x) - 5):length(x)]
 
   x_take <- c(x[length(x) - 2], x[length(x) - 1])
   x_date <- Decade$new(x[length(x)])$set_additions(x)
@@ -85,8 +95,8 @@ get_decade <- function(x, uncertain = FALSE) {
 }
 
 get_period <- function(x, uncertain = FALSE) {
+  x <- x[max(1, length(x) - 4):length(x)]
   if (uncertain) x <- c("?", x, use.names = FALSE)
-  x <- x[max(1, length(x) - 5):length(x)]
 
   if (length(x) > 1) {
     y <- as.character(rev(x)[1:2]); n_char <- nchar(y)
@@ -97,16 +107,24 @@ get_period <- function(x, uncertain = FALSE) {
     }
   }
 
-  x_date <- Period$new(x)$set_additions(x)
+  x_date <- Periods$new(x)$set_additions(x)
 
   return(x_date)
 }
 
 get_year <- function(x, uncertain = FALSE) {
+  x <- x[max(1, length(x) - 4):length(x)]
+  if (length(x) < 5) x <- c(rep(NA, 4), x)
+
   if (uncertain) x <- c("?", x, use.names = FALSE)
-  x <- x[max(1, length(x) - 5):length(x)]
+
+  if (is_number(x[length(x) - 1])) {
+    x_take <- c(x[length(x) - 1], x[length(x) - 2])
+  } else {
+    x_take <- c(x[length(x) - 2], x[length(x) - 1])
+  }
 
   x_date <- Year$new(x[length(x)])$set_additions(x)
 
-  return(x_date)
+  return(x_date$take(x_take, ignore_errors = TRUE))
 }

@@ -27,7 +27,7 @@ require(magrittr)
 
 ## Overview
 
-This R package provides means to detect and parse historic dates, e.g., to ISO 8601:2-2019. It automatically converts language-specific verbal information, e.g., “1st half of the 19th century,” into its standardized numerical counterparts, e.g., “1801/1850.” The package follows the recommendations of the MIDAS (Marburger Informations-, Dokumentations- und Administrations-System), see, e.g., https://doi.org/10.11588/artdok.00003770. The name of the package is inspired by Heinrich Hoffmann’s rhymed story “[Struwwelpeter](http://www.gutenberg.org/files/12116/12116-h/12116-h.htm#Shock-headed_Peter)”, which goes as follows:
+This R package provides means to detect and parse historic dates, e.g., to ISO 8601:2-2019. It automatically converts language-specific verbal information, e.g., “circa 1st half of the 19th century,” into its standardized numerical counterparts, e.g., “1801-01-01\~/1850-12-31\~.” The package follows the recommendations of the MIDAS (Marburger Informations-, Dokumentations- und Administrations-System), see, e.g., https://doi.org/10.11588/artdok.00003770. It internally uses [lubridate](https://github.com/tidyverse/lubridate). The name of the package is inspired by Heinrich Hoffmann’s rhymed story “[Struwwelpeter](http://www.gutenberg.org/files/12116/12116-h/12116-h.htm#Shock-headed_Peter)”, which goes as follows:
 
 > Just look at him! there he stands,
 with his nasty hair and hands.
@@ -53,21 +53,38 @@ devtools::install_github("stefanieschneider/unstruwwel")
 
 The unstruwwel package contains only one function, `unstruwwel()`, that does all the *magic* language-specific standardization. `unstruwwel()` returns a named list, where each element is the result of applying the function to the corresponding element in the input vector.
 
-```{r example, message=FALSE, warning=FALSE}
+### English-language examples
+```{r example_en, message=FALSE, warning=FALSE}
 dates <- c(
-  "zwischen letztem Drittel 15. und 1. Hälfte 16. Jahrhundert",
-  "wohl nach 1923", "undatiert", "spätestens 1750er Jahre"
+  "5th century b.c.", "unknown", "late 16th century", "mid-12th century",
+  "mid-1880s", "June 1963", "August 11, 1958", "ca. 1920", "before 1856"
 )
 
 # returns valid ISO 8601:2-2019 dates
-unlist(unstruwwel(dates, language = "de", scheme = "iso 8601"))
+unlist(unstruwwel(dates, "en", scheme = "iso-format"), use.names = FALSE)
 
 # returns a numerical interval of length 2 
-unstruwwel(dates, language = "de", scheme = "interval") %>%
+unstruwwel(dates, language = "en", scheme = "time-span") %>%
   tibble::as_tibble() %>% dplyr::mutate(id = row_number()) %>% 
   tidyr::gather(key = id) %>% tidyr::unnest_wider(value) %>% 
   dplyr::rename_all(dplyr::funs(c("text", "start", "end")))
+```
 
+### German-language examples
+```{r example_de, message=FALSE, warning=FALSE}
+dates <- c(
+  "letztes Drittel 15. und 1. Hälfte 16. Jahrhundert", "undatiert", "1460?",
+  "wohl nach 1923", "spätestens 1750er Jahre", "1897 (Guss vmtl. vor 1906)"
+)
+
+# returns valid ISO 8601:2-2019 dates
+unlist(unstruwwel(dates, "de", scheme = "iso-format"), use.names = FALSE)
+
+# returns a numerical interval of length 2 
+unstruwwel(dates, language = "de", scheme = "time-span") %>%
+  tibble::as_tibble() %>% dplyr::mutate(id = row_number()) %>% 
+  tidyr::gather(key = id) %>% tidyr::unnest_wider(value) %>% 
+  dplyr::rename_all(dplyr::funs(c("text", "start", "end")))
 ```
 
 ## Contributing

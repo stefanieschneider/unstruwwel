@@ -15,12 +15,13 @@ status](http://codecov.io/github/stefanieschneider/unstruwwel/coverage.svg?branc
 
 This R package provides means to detect and parse historic dates, e.g.,
 to ISO 8601:2-2019. It automatically converts language-specific verbal
-information, e.g., “1st half of the 19th century,” into its standardized
-numerical counterparts, e.g., “1801/1850.” The package follows the
-recommendations of the MIDAS (Marburger Informations-, Dokumentations-
-und Administrations-System), see, e.g.,
-<https://doi.org/10.11588/artdok.00003770>. The name of the package is
-inspired by Heinrich Hoffmann’s rhymed story
+information, e.g., “circa 1st half of the 19th century,” into its
+standardized numerical counterparts, e.g., “1801-01-01\~/1850-12-31\~.”
+The package follows the recommendations of the MIDAS (Marburger
+Informations-, Dokumentations- und Administrations-System), see, e.g.,
+<https://doi.org/10.11588/artdok.00003770>. It internally uses
+[lubridate](https://github.com/tidyverse/lubridate). The name of the
+package is inspired by Heinrich Hoffmann’s rhymed story
 “[Struwwelpeter](http://www.gutenberg.org/files/12116/12116-h/12116-h.htm#Shock-headed_Peter)”,
 which goes as follows:
 
@@ -49,35 +50,66 @@ does all the *magic* language-specific standardization. `unstruwwel()`
 returns a named list, where each element is the result of applying the
 function to the corresponding element in the input vector.
 
+### English-language examples
+
 ``` r
 dates <- c(
-  "zwischen letztem Drittel 15. und 1. Hälfte 16. Jahrhundert",
-  "wohl nach 1923", "undatiert", "spätestens 1750er Jahre"
+  "5th century b.c.", "unknown", "late 16th century", "mid-12th century",
+  "mid-1880s", "June 1963", "August 11, 1958", "ca. 1920", "before 1856"
 )
 
 # returns valid ISO 8601:2-2019 dates
-unlist(unstruwwel(dates, language = "de", scheme = "iso 8601"))
-#> zwischen letztem Drittel 15. und 1. Hälfte 16. Jahrhundert 
-#>                                                "1467/1550" 
-#>                                             wohl nach 1923 
-#>                                                  "1923?.." 
-#>                                                  undatiert 
-#>                                                         NA 
-#>                                    spätestens 1750er Jahre 
-#>                                                   "..1759"
+unlist(unstruwwel(dates, "en", scheme = "iso-format"), use.names = FALSE)
+#> [1] "-500-12-31/-401-01-01"   NA                        "1586-01-01/1600-12-31"  
+#> [4] "1146-01-01/1155-12-31"   "1884-01-01/1885-12-31"   "1963-06-01/1963-06-30"  
+#> [7] "1958-08-11/1958-08-11"   "1920-01-01~/1920-12-31~" "..1855-12-31"
 
 # returns a numerical interval of length 2 
-unstruwwel(dates, language = "de", scheme = "interval") %>%
+unstruwwel(dates, language = "en", scheme = "time-span") %>%
   tibble::as_tibble() %>% dplyr::mutate(id = row_number()) %>% 
   tidyr::gather(key = id) %>% tidyr::unnest_wider(value) %>% 
   dplyr::rename_all(dplyr::funs(c("text", "start", "end")))
-#> # A tibble: 4 x 3
-#>   text                                                       start   end
-#>   <chr>                                                      <dbl> <dbl>
-#> 1 zwischen letztem Drittel 15. und 1. Hälfte 16. Jahrhundert  1467  1550
-#> 2 wohl nach 1923                                              1923   Inf
-#> 3 undatiert                                                     NA    NA
-#> 4 spätestens 1750er Jahre                                     -Inf  1759
+#> # A tibble: 9 x 3
+#>   text              start   end
+#>   <chr>             <dbl> <dbl>
+#> 1 5th century b.c.   -500  -401
+#> 2 unknown              NA    NA
+#> 3 late 16th century  1586  1600
+#> 4 mid-12th century   1146  1155
+#> 5 mid-1880s          1884  1885
+#> 6 June 1963          1963  1963
+#> 7 August 11, 1958    1958  1958
+#> 8 ca. 1920           1920  1920
+#> 9 before 1856        -Inf  1855
+```
+
+### German-language examples
+
+``` r
+dates <- c(
+  "letztes Drittel 15. und 1. Hälfte 16. Jahrhundert", "undatiert", "1460?",
+  "wohl nach 1923", "spätestens 1750er Jahre", "1897 (Guss vmtl. vor 1906)"
+)
+
+# returns valid ISO 8601:2-2019 dates
+unlist(unstruwwel(dates, "de", scheme = "iso-format"), use.names = FALSE)
+#> [1] "1467-01-01/1550-12-31"   NA                        "1460-01-01~/1460-12-31~"
+#> [4] "1924-01-01?.."           "..1749-12-31"            "..1905-12-31?"
+
+# returns a numerical interval of length 2 
+unstruwwel(dates, language = "de", scheme = "time-span") %>%
+  tibble::as_tibble() %>% dplyr::mutate(id = row_number()) %>% 
+  tidyr::gather(key = id) %>% tidyr::unnest_wider(value) %>% 
+  dplyr::rename_all(dplyr::funs(c("text", "start", "end")))
+#> # A tibble: 6 x 3
+#>   text                                              start   end
+#>   <chr>                                             <dbl> <dbl>
+#> 1 letztes Drittel 15. und 1. Hälfte 16. Jahrhundert  1467  1550
+#> 2 undatiert                                            NA    NA
+#> 3 1460?                                              1460  1460
+#> 4 wohl nach 1923                                     1924   Inf
+#> 5 spätestens 1750er Jahre                            -Inf  1749
+#> 6 1897 (Guss vmtl. vor 1906)                         -Inf  1905
 ```
 
 ## Contributing

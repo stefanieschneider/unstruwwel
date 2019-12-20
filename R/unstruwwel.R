@@ -10,17 +10,19 @@
 #' (Marburger Informations-, Dokumentations- und Administrations-
 #' System). See \url{https://doi.org/10.11588/artdok.00003770}.
 #' @param verbose If \code{TRUE}, additional diagnostics are printed.
-#' @param scheme Scheme code of the output list. Either \code{ISO 8601},
-#' \code{interval}, or \code{object}.
+#' @param scheme Scheme code of the output list. Either \code{time-span},
+#' \code{iso-format}, or \code{object}.
 #' @param fuzzify A numerical vector of length 2 to extend the interval
 #' of approximate or uncertain time periods. This is only applied if
-#' \code{scheme == "interval"}.
+#' \code{scheme == "time-span"}.
 #'
 #' @return A named list of vectors or objects of \code{\link{R6Class}}.
 #'
 #' @examples
+#' \donttest{
 #' unstruwwel("1. Hälfte 19. Jahrhundert", language = "de")
 #' unstruwwel("circa between 1901 and 1905", language = "en")
+#' }
 #'
 #' @note Although multiple languages can be detected, only dominant
 #' ones are ultimately set.
@@ -31,7 +33,7 @@
 #' @rdname unstruwwel
 #' @export
 unstruwwel <- function(x, language = NULL, midas = FALSE, verbose = TRUE,
-    scheme = "interval", fuzzify = c(0, 0)
+    scheme = "time-span", fuzzify = c(0, 0)
 ) {
   x <- unlist(x); scheme <- tolower(scheme)
   language <- unlist(language, recursive = TRUE)
@@ -42,7 +44,7 @@ unstruwwel <- function(x, language = NULL, midas = FALSE, verbose = TRUE,
 
   assertthat::assert_that(is.numeric(fuzzify), length(fuzzify) == 2)
   assertthat::assert_that(is.vector(language), is.character(language))
-  assertthat::assert_that(scheme %in% c("iso 8601", "interval", "object"))
+  assertthat::assert_that(scheme %in% c("iso-format", "time-span", "object"))
 
   if (!guess_midas(x, midas = midas, verbose = verbose)) {
     if (is.null(language)) language <- guess_language(x, verbose)

@@ -5,50 +5,65 @@
 #'
 #' @examples
 #' \donttest{
-#'   x <- Decade$new(1520)
-#'   x$take(1, type = "half")
+#' x <- Decade$new(1520)
+#' x$take(1, type = "half")
 #' }
 #'
-#' @keywords date time
 #' @docType class
-#'
 #' @importFrom R6 R6Class
+#'
+#' @importFrom lubridate interval ymd years days
+#' @importFrom lubridate int_standardize int_start int_end
 Decade <- R6Class(
   classname = "Decade",
-  inherit = Period,
+  inherit = Periods,
 
   private = list(
     #' @description
     #' Helper function to specify the beginning of a decade.
     .take_early = function() {
-      interval <- c(
-        private$.interval[1],
-        private$.interval[1] + 1
-      )
+      if (int_start(private$.interval) < ymd("0000-01-01")) {
+        y <- c(
+          int_start(private$.interval) + years(8),
+          int_end(private$.interval) - years(0)
+        )
+      } else {
+        y <- c(
+          int_start(private$.interval) + years(0),
+          int_end(private$.interval) - years(8)
+        )
+      }
 
-      return(interval)
+      return(interval(y[1], y[2]))
     },
 
     #' @description
     #' Helper function to specify the middle of a decade.
     .take_mid = function() {
-      interval <- c(
-        private$.interval[1] + 4,
-        private$.interval[2] - 4
+      y <- c(
+        int_start(private$.interval) + years(4),
+        int_end(private$.interval) - years(4)
       )
 
-      return(interval)
+      return(interval(y[1], y[2]))
     },
 
     #' @description
     #' Helper function to specify the end of a decade.
     .take_late = function() {
-      interval <- c(
-        private$.interval[2] - 1,
-        private$.interval[2]
-      )
+      if (int_start(private$.interval) < ymd("0000-01-01")) {
+        y <- c(
+          int_start(private$.interval) + years(0),
+          int_end(private$.interval) - years(8)
+        )
+      } else {
+        y <- c(
+          int_start(private$.interval) + years(8),
+          int_end(private$.interval) - years(0)
+        )
+      }
 
-      return(interval)
+      return(interval(y[1], y[2]))
     }
   ),
 
@@ -67,20 +82,20 @@ Decade <- R6Class(
 
       assertthat::assert_that(
         length(value) == 1 && floor(value) == value,
-        value <= get_current_year()
+        value <= get_current_year(), value %% 10 == 0
       )
 
-      if (value < 0) private$.negative <- TRUE
-
-      if (value %% 10 != 0) {
-        assertthat::assert_that(value < 202)
-        value <- abs(value) * 10 + 1
+      if (value < 0) {
+        x <- ymd("0000-01-01") - years(abs(value))
+        if (official_def) x <- x - years(1)
+        x <- interval(x, x - years(8) - days(1))
+      } else {
+        x <- ymd(paste0(value, "-01-01"))
+        if (official_def) x <- x + years(1)
+        x <- interval(x, x + years(10) - days(1))
       }
 
-      private$.interval <- c(abs(value), abs(value) + 9)
-
-      if (official_def && value %% 10 == 0)
-        private$.interval <- private$.interval + 1
+      private$.interval <- int_standardize(x)
     }
   )
 )

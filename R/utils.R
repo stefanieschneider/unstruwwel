@@ -6,6 +6,16 @@ get_invalid_language <- function(x) {
   return(x[!(x %in% get("languages")$name)][1])
 }
 
+get_months <- function() {
+  x <- c(
+    "january", "february", "march", "april", "may",
+    "june", "july", "august", "september", "october",
+    "november", "december"
+  )
+
+  return(x)
+}
+
 get_current_year <- function() {
   return(as.integer(format(Sys.Date(), "%Y")))
 }
@@ -22,33 +32,6 @@ is_year_addition <- function(x) {
 
 is_number <- function(x) {
   return(suppressWarnings(!is.na(as.numeric(x))))
-}
-
-is_season <- function(x) {
-  seasons <- c(
-    "winter", "spring", "summer", "autumn"
-  )
-
-  return(x %in% seasons)
-}
-
-is_month <- function(x) {
-  months <- c(
-    "january", "february", "march", "april", "may",
-    "june", "july", "august", "september", "october",
-    "november", "december"
-  )
-
-  return(x %in% months)
-}
-
-is_day <- function(x) {
-  days <- c(
-    "monday", "tuesday", "wednesday", "thursday",
-    "friday", "saturday", "sunday"
-  )
-
-  return(x %in% days)
 }
 
 get_item <- function(x, n = 1) {

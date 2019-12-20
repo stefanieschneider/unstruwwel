@@ -3,19 +3,17 @@
 #' An Object of \code{\link{R6Class}} with methods to set
 #' common time periods and specifications for time periods.
 #'
-#' @keywords date time
 #' @docType class
-#'
 #' @importFrom R6 R6Class
-Period <- R6Class(
-  classname = "Period",
+#'
+#' @importFrom lubridate as_date interval ymd years year days
+#' @importFrom lubridate int_standardize int_start int_end
+Periods <- R6Class(
+  classname = "Periods",
 
   private = list(
     #' @field .interval Stores a time interval.
-    .interval = NA_integer_,
-
-    #' @field .negative If `TRUE`, a time period is negative.
-    .negative = FALSE,
+    .interval = NA_character_,
 
     #' @description
     #' Helper function to specify a time period.
@@ -27,62 +25,97 @@ Period <- R6Class(
     #' are supported: \code{"early"}, \code{"mid"}, \code{"late"},
     #' \code{"quarter"}, \code{"third"}, and \code{"half"}. If
     #' \code{type} is `NULL`, \code{x} defines a year or decade.
-    #' @param ignore_errors If `TRUE`, error messages are ignored.
     .take_period = function(x, type) {
-      assertthat::assert_that(length(x) == 1)
+      max_value <- switch(type, quarter = 4, third = 3, half = 2, 10)
+      if (x == "last") x <- max_value; if (x == "first") x <- 1
 
-      max_value <- switch(type,
-        quarter = 4, third = 3, half = 2
-      )
+      assertthat::assert_that(length(x) == 1, x %in% 1:max_value)
 
-      if (is.null(max_value)) max_value <- 10
-      if (x == "last") x <- max_value
+      if (int_start(private$.interval) < ymd("0000-01-01")) {
+        n_years <- private$.interval / years(1) + 2
+        step <- round(n_years / max_value, 0)
 
-      assertthat::assert_that(x %in% 1:max_value,
-        msg = "`x` has an invalid value.")
+        y <- c(
+          int_end(private$.interval) - years((x - 1) * step),
+          int_end(private$.interval) - years(x * step - 2) - days(1)
+        )
 
-      n_years <- diff(private$.interval) + 1
-      step <- floor(n_years / max_value)
+        if (x == max_value && step %% 3 == 0) y[2] <- y[2] - years(1)
+      } else {
+        n_years <- private$.interval / years(1)
+        step <- round(n_years / max_value, 0)
 
-      interval <- c(
-        (x - 1) * step + private$.interval[1],
-        x * step + private$.interval[1] - 1
-      )
+        y <- c(
+          int_start(private$.interval) + years((x - 1) * step),
+          int_start(private$.interval) + years(x * step) - days(1)
+        )
 
-      if (x == max_value && step %% 3 == 0) {
-        interval[2] <- interval[2] + 1
+        if (x == max_value && step %% 3 == 0) y[2] <- y[2] + years(1)
       }
 
-      return(interval)
+      return(interval(y[1], y[2]))
     }
   ),
 
   active = list(
-    #' @field interval Convert and return a time interval.
+    #' @field interval Convert and return a POSIXt time interval.
     interval = function(value) {
       if (missing(value)) {
-        negative <- ifelse(private$.negative, -1, 1)
-        x <- sort(private$.interval * negative)
+        interval_x <- int_standardize(private$.interval)
 
-        if (self$express < 0) x[1] <- -Inf
-        if (self$express > 0) x[2] <- Inf
+        if (self$express != 0) {
+          if (self$express < 0) {
+            start_x <- ymd("0000-01-01") - years(9999)
+            end_x <- int_start(interval_x) - days(1)
+          }
 
-        return(x)
+          if (self$express > 0) {
+            start_x <- int_end(interval_x) + days(1)
+            end_x <- ymd("0000-01-01") + years(9999)
+          }
+
+          interval_x <- interval(start_x, end_x)
+        }
+
+        return(interval_x)
       } else {
         stop("`$interval` is read only.", FALSE)
       }
     },
 
-    #' @field text Convert and return a text in ISO 8601.
-    text = function(value) {
+    #' @field time_span Convert and return a time span in years.
+    time_span = function(value) {
       if (missing(value)) {
-        x <- unique(as.character(self$interval))
+        x <- c(
+          year(int_start(self$interval)),
+          year(int_end(self$interval))
+        )
 
-        if (self$fuzzy < 0) x <- paste0(x, "~", collapse = NULL)
-        if (self$fuzzy > 0) x <- paste0(x, "?", collapse = NULL)
+        if (x[1] == -9999) x[1] <- -Inf
+        if (x[2] == 9999) x[2] <- Inf
 
-        if (self$express < 0) x <- paste0("..", x[2], collapse = "")
-        if (self$express > 0) x <- paste0(x[1], "..", collapse = "")
+        return(sort(x, decreasing = FALSE))
+      } else {
+        stop("`$time_span` is read only.", FALSE)
+      }
+    },
+
+    #' @field iso_format Convert and return a date in ISO 8601.
+    iso_format = function(value) {
+      if (missing(value)) {
+        x <- c(int_start(self$interval), int_end(self$interval))
+
+        if (self$fuzzy < 0)
+          x <- paste0(x, "~", collapse = NULL)
+
+        if (self$fuzzy > 0)
+          x <- paste0(x, "?", collapse = NULL)
+
+        if (year(int_start(self$interval)) == -9999)
+          x <- paste0("..", x[2], collapse = "")
+
+        if (year(int_end(self$interval)) == 9999)
+          x <- paste0(x[1], "..", collapse = "")
 
         return(paste(x, collapse = "/"))
       } else {
@@ -101,43 +134,34 @@ Period <- R6Class(
     #' @description
     #' Create a time period.
     #'
-    #' @param ... Numerical scalars or objects of class \code{Period}.
+    #' @param ... Intervals, numerical scalars, or objects of
+    #' class \code{Period}.
     initialize = function(...) {
-      withCallingHandlers({
+      if ("Interval" %in% class(...)) {
+        private$.interval <- Reduce(union, list(...))
+      } else {
         x <- unlist(list(...), recursive = TRUE)
+        x <- x[!is.na(x) & length(x) > 0]
 
-        fuzzy <- lapply(x, function(x) {
-          if ("Period" %in% class(x)) x$fuzzy
-        })
-
-        express <- lapply(x, function(x) {
-          if ("Period" %in% class(x)) x$express
-        })
+        fuzzy <- unlist(lapply(x, function(x) {
+          if ("Periods" %in% class(x)) x$fuzzy}))
 
         x <- lapply(x, function(x) {
-          if ("Period" %in% class(x)) x$interval else x
-        })
-
-        x <- unlist(x, recursive = FALSE, use.names = FALSE)
-        x <- c(na.omit(as.integer(x)), recursive = TRUE)
+          if ("Periods" %in% class(x)) x$interval
+          else Year$new(x)$interval})
 
         assertthat::assert_that(length(x) > 0)
 
-        if (max(x) < 0) private$.negative <- TRUE
-        private$.interval <- c(min(x), c(max(x)))
+        private$.interval <- interval(
+          Reduce(min, lapply(x, int_start)),
+          Reduce(max, lapply(x, int_end))
+        )
 
-        if (length(unlist(fuzzy)) > 0) {
-          if (any(unlist(fuzzy) < 0)) self$fuzzy <- -1
-          if (any(unlist(fuzzy) > 0)) self$fuzzy <- 1
+        if (length(fuzzy) > 0) {
+          if (any(fuzzy < 0)) self$fuzzy <- -1
+          if (any(fuzzy > 0)) self$fuzzy <- 1
         }
-
-        if (length(unlist(express)) > 0) {
-          if (any(unlist(express) < 0)) self$express <- -1
-          if (any(unlist(express) > 0)) self$express <- 1
-        }
-      }, warning = function(event) {
-        invokeRestart("muffleWarning")
-      })
+      }
     },
 
     #' @description
@@ -177,7 +201,7 @@ Period <- R6Class(
           assertthat::assert_that(length(type) == 1)
           type <- tolower(as.character(type))
 
-          interval <- switch(type,
+          interval_x <- switch(type,
             early = private$.take_early(),
             late = private$.take_late(),
             mid = private$.take_mid(),
@@ -185,18 +209,15 @@ Period <- R6Class(
             private$.take_period(x, type)
           )
 
-          negative <- ifelse(private$.negative, -1, 1)
+          period_x <- Periods$new(interval_x)
 
-          interval <- sort(interval * negative)
-          new_period <- Period$new(interval)
+          period_x$fuzzy <- self$fuzzy
+          period_x$express <- self$express
 
-          new_period$fuzzy <- self$fuzzy
-          new_period$express <- self$express
-
-          return(new_period)
+          return(period_x)
         }, error = function(event) {
-          if (!ignore_errors) stop(event)
-          else return(self)
+          if (ignore_errors) return(self)
+          else stop(event)
         })
       })
     }

@@ -6,16 +6,16 @@ test_that("approximate date", {
   x <- unstruwwel("1460?", "en", scheme = "object")
 
   expect_equal(get_item(x)$fuzzy, -1)
-  expect_equal(get_item(x)$text, "1460~")
-  expect_equal(get_item(x)$interval, c(1460, 1460))
+  expect_equal(get_item(x)$time_span, c(1460, 1460))
+  expect_equal(get_item(x)$iso_format, "1460-01-01~/1460-12-31~")
 })
 
 test_that("uncertain date", {
   x <- unstruwwel("etwa 1842", "de", scheme = "object")
 
   expect_equal(get_item(x)$fuzzy, 1)
-  expect_equal(get_item(x)$text, "1842?")
-  expect_equal(get_item(x)$interval, c(1842, 1842))
+  expect_equal(get_item(x)$time_span, c(1842, 1842))
+  expect_equal(get_item(x)$iso_format, "1842-01-01?/1842-12-31?")
 })
 
 test_that("date with year", {
@@ -25,11 +25,11 @@ test_that("date with year", {
 test_that("date with multiple years", {
   x <- unstruwwel("(Guss vor 1906) 1897", "de", scheme = "object")
 
-  expect_equal(get_item(x, 1)$interval, c(-Inf, 1906))
-  expect_equal(get_item(x, 2)$interval, c(1897, 1897))
+  expect_equal(get_item(x, 1)$time_span, c(-Inf, 1905))
+  expect_equal(get_item(x, 2)$time_span, c(1897, 1897))
 
-  expect_equal(get_item(x, 1)$text, "..1906")
-  expect_equal(get_item(x, 2)$text, "1897")
+  expect_equal(get_item(x, 1)$iso_format, "..1905-12-31")
+  expect_equal(get_item(x, 2)$iso_format, "1897-01-01/1897-12-31")
 })
 
 test_that("date with year interval", {
@@ -37,17 +37,34 @@ test_that("date with year interval", {
 })
 
 test_that("date with year and season", {
-  expect_equal(get_item(unstruwwel("Autumn 1945", "en")), c(1945, 1945))
-  expect_equal(get_item(unstruwwel("vor dem Sommer 1907", "de")), c(-Inf, 1907))
+  x <- unstruwwel("Autumn 1945", "en", scheme = "object")
+
+  expect_equal(get_item(x)$time_span, c(1945, 1945))
+  expect_equal(get_item(x)$iso_format, "1945-09-01/1945-11-30")
+
+  x <- unstruwwel("vor dem Sommer 1907", "de", scheme = "object")
+
+  expect_equal(get_item(x)$time_span, c(-Inf, 1907))
+  expect_equal(get_item(x)$iso_format, "..1907-05-31")
 })
 
 test_that("date with year and month", {
-  expect_equal(get_item(unstruwwel("May 1901", "en")), c(1901, 1901))
-  expect_equal(get_item(unstruwwel("after June 1860", "en")), c(1860, Inf))
+  x <- unstruwwel("May 1901", "en", scheme = "object")
+
+  expect_equal(get_item(x)$time_span, c(1901, 1901))
+  expect_equal(get_item(x)$iso_format, "1901-05-01/1901-05-31")
+
+  x <- unstruwwel("after June 1860", "en", scheme = "object")
+
+  expect_equal(get_item(x)$time_span, c(1860, Inf))
+  expect_equal(get_item(x)$iso_format, "1860-07-01..")
 })
 
 test_that("date with year, month, and day", {
-  expect_equal(get_item(unstruwwel("January 1, 1856", "en")), c(1856, 1856))
+  x <- unstruwwel("January 1, 1856", "en", scheme = "object")
+
+  expect_equal(get_item(x)$time_span, c(1856, 1856))
+  expect_equal(get_item(x)$iso_format, "1856-01-01/1856-01-01")
 })
 
 test_that("date with decade", {
@@ -56,7 +73,13 @@ test_that("date with decade", {
 })
 
 test_that("date with century", {
-  expect_equal(get_item(unstruwwel("19. Jahrhundert", "de")), c(1801, 1900))
-  expect_equal(get_item(unstruwwel("last third 17th century", "en")), c(1667, 1700))
-  expect_equal(get_item(unstruwwel("circa 1st half 5th century", "en")), c(401, 450))
+  x <- unstruwwel("circa 1st half 5th century", "en", scheme = "object")
+
+  expect_equal(get_item(x)$time_span, c(401, 450))
+  expect_equal(get_item(x)$iso_format, "0401-01-01~/0450-12-31~")
+
+  expect_equal(get_item(unstruwwel("19. Jh.", "de")), c(1801, 1900))
+  expect_equal(get_item(unstruwwel("5. Jh. v. Chr", "de")), c(-500, -401))
+
+  expect_equal(get_item(unstruwwel("last third 17th cent", "en")), c(1667, 1700))
 })

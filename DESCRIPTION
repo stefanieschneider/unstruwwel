@@ -18,6 +18,7 @@ Imports:
     utf8,
     jsonlite,
     assertthat,
+    lubridate,
     magrittr,
     stringr,
     tibble,

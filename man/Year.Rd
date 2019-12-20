@@ -15,56 +15,41 @@ common time periods and specifications for years.
 }
 \examples{
 \donttest{
-  x <- Year$new(1520)
-  x$take(type = "autumn")
+x <- Year$new(1520)
+x$take(15, type = "june")
 }
 
 }
-\keyword{date}
-\keyword{time}
 \section{Super class}{
-\code{\link[unstruwwel:Period]{unstruwwel::Period}} -> \code{Year}
-}
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{.season}}{Stores a season.}
-
-\item{\code{.month}}{Stores a month.}
-
-\item{\code{.day}}{Stores a day.}
-}
-\if{html}{\out{</div>}}
-}
-\section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{.season}}{Stores a season.}
-
-\item{\code{.month}}{Stores a month.}
-
-\item{\code{.day}}{Stores a day.}
-}
-\if{html}{\out{</div>}}
+\code{\link[unstruwwel:Periods]{unstruwwel::Periods}} -> \code{Year}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{Year$new()}}
+\item \href{#method-take}{\code{Year$take()}}
 \item \href{#method-clone}{\code{Year$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="unstruwwel" data-topic="Period" data-id="set_additions">}\href{../../unstruwwel/html/Period.html#method-set_additions}{\code{unstruwwel::Period$set_additions()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="unstruwwel" data-topic="Period" data-id="take">}\href{../../unstruwwel/html/Period.html#method-take}{\code{unstruwwel::Period$take()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="unstruwwel" data-topic="Periods" data-id="set_additions">}\href{../../unstruwwel/html/Periods.html#method-set_additions}{\code{unstruwwel::Periods$set_additions()}}\out{</span>}
 }
 \out{</details>}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
+Helper function to specify a time period.
+
+
+Helper function to specify a season.
+
+
+Helper function to specify a month.
+
+
 Create a year.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Year$new(value)}\if{html}{\out{</div>}}
@@ -74,6 +59,35 @@ Create a year.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{value}}{A numerical scalar.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Object of \code{\link{R6Class}} with methods to set
+common time periods and specifications for years.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-take"></a>}}
+\subsection{Method \code{take()}}{
+Specify a year.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Year$take(x = NA, type = NA, ignore_errors = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{A numerical scalar. The range of valid values
+depends on \code{type}. If \code{type} is \code{"spring"},
+\code{"summer"}, \code{"autumn"}, or \code{"winter"},
+\code{x} is ignored.}
+
+\item{\code{type}}{A character scalar. The following values are
+supported: \code{"spring"}, \code{"summer"}, \code{"autumn"},
+\code{"winter"}, and all English-language months.}
+
+\item{\code{ignore_errors}}{If `TRUE`, error messages are ignored.}
 }
 \if{html}{\out{</div>}}
 }
