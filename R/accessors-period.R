@@ -105,19 +105,16 @@ Periods <- R6Class(
       if (missing(value)) {
         x <- c(int_start(self$interval), int_end(self$interval))
 
-        if (self$fuzzy < 0)
-          x <- paste0(x, "~", collapse = NULL)
-
-        if (self$fuzzy > 0)
-          x <- paste0(x, "?", collapse = NULL)
+        if (self$fuzzy < 0) x <- paste0(x, "~", collapse = NULL)
+        if (self$fuzzy > 0) x <- paste0(x, "?", collapse = NULL)
 
         if (year(int_start(self$interval)) == -9999)
-          x <- paste0("..", x[2], collapse = "")
+          x <- paste("..", x[2], sep = "", collapse = "")
 
         if (year(int_end(self$interval)) == 9999)
-          x <- paste0(x[1], "..", collapse = "")
+          x <- paste(x[1], "..",sep = "", collapse = "")
 
-        return(paste(x, collapse = "/"))
+        return(paste(sprintf("%010s", x), collapse = "/"))
       } else {
         stop("`$text` is read only.", FALSE)
       }
