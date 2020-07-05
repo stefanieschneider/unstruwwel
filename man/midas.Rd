@@ -4,7 +4,9 @@
 \name{midas}
 \alias{midas}
 \title{MIDAS Standardization Examples}
-\format{A vector of length 8115.}
+\format{
+A vector of length 8115.
+}
 \usage{
 data(midas)
 }

@@ -40,6 +40,7 @@ x$take(15, type = "june")
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Helper function to specify a time period.
 
@@ -69,6 +70,7 @@ common time periods and specifications for years.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-take"></a>}}
+\if{latex}{\out{\hypertarget{method-take}{}}}
 \subsection{Method \code{take()}}{
 Specify a year.
 \subsection{Usage}{
@@ -98,6 +100,7 @@ common time periods and specifications for years.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

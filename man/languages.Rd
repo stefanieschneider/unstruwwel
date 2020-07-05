@@ -4,7 +4,9 @@
 \name{languages}
 \alias{languages}
 \title{Language Information}
-\format{A tibble with 4 rows and 5 variables.}
+\format{
+A tibble with 4 rows and 5 variables.
+}
 \usage{
 data(languages)
 }

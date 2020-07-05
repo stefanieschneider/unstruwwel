@@ -39,6 +39,9 @@ test_that("positive century with take", {
 
   interval_x <- interval(ymd("1421-01-01"), ymd("1430-12-31"))
   expect_equal(Century$new(15)$take(3)$interval, interval_x)
+
+  interval_x <- interval(ymd("1451-01-01"), ymd("1500-12-31"))
+  expect_equal(Century$new(15)$take("last", "half")$interval, interval_x)
 })
 
 test_that("negative century", {

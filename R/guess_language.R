@@ -34,7 +34,8 @@ guess_language <- function(x, verbose = TRUE) {
   }
 
   assertthat::assert_that(
-    nrow(language) > 0, msg = "Language could not be detected."
+    !is.null(language) && nrow(language) > 0,
+    msg = "Language could not be detected."
   )
 
   language <- purrr::set_names(language$value, language$key)

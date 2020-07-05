@@ -48,6 +48,7 @@ common time periods and specifications for time periods.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Helper function to specify a time period.
 
@@ -77,6 +78,7 @@ are supported: \code{"early"}, \code{"mid"}, \code{"late"},
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-set_additions"></a>}}
+\if{latex}{\out{\hypertarget{method-set_additions}{}}}
 \subsection{Method \code{set_additions()}}{
 Set additions for a time period.
 \subsection{Usage}{
@@ -93,6 +95,7 @@ Set additions for a time period.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-take"></a>}}
+\if{latex}{\out{\hypertarget{method-take}{}}}
 \subsection{Method \code{take()}}{
 Specify a period.
 \subsection{Usage}{
@@ -122,6 +125,7 @@ common time periods and specifications for time periods.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

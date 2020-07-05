@@ -4,7 +4,9 @@
 \name{schemes}
 \alias{schemes}
 \title{Language-Specific Scheme Variants}
-\format{A tibble with 3583 rows and 3 variables.}
+\format{
+A tibble with 3583 rows and 3 variables.
+}
 \usage{
 data(schemes)
 }

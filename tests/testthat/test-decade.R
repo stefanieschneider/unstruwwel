@@ -1,6 +1,6 @@
 test_that("invalid decade", {
   expect_error(Decade$new(203))
-  expect_error(Decade$new(2020))
+  expect_error(Decade$new(2021))
   expect_error(Decade$new(197.5))
   expect_error(Decade$new(c(197, 198)))
 })

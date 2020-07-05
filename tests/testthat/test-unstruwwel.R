@@ -1,3 +1,11 @@
+test_that("no language", {
+  expect_error(unstruwwel("1460", scheme = "object"))
+})
+
+test_that("invalid language", {
+  expect_error(unstruwwel("1460", "bo", scheme = "object"))
+})
+
 test_that("no date", {
   expect_equal(get_item(unstruwwel("undatiert", "de")), c(NA, NA))
 })

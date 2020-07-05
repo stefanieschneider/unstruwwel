@@ -112,7 +112,7 @@ Periods <- R6Class(
           x <- paste("..", x[2], sep = "", collapse = "")
 
         if (year(int_end(self$interval)) == 9999)
-          x <- paste(x[1], "..",sep = "", collapse = "")
+          x <- paste(x[1], "..", sep = "", collapse = "")
 
         x <- stringr::str_pad(x, width = 10, pad = "0")
 
