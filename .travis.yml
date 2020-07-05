@@ -13,3 +13,7 @@ r_packages:
 after_success:
   - Rscript -e 'library(covr); codecov()'
   - bash <(curl -s https://codecov.io/bash)
+
+env:
+  global:
+    - _R_CHECK_DONTTEST_EXAMPLES_=FALSE

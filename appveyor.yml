@@ -17,6 +17,7 @@ install:
 
 environment:
   global:
+    R_CHECK_DONTTEST_EXAMPLES: false
     WARNINGS_ARE_ERRORS: 1
     USE_RTOOLS: true
 
