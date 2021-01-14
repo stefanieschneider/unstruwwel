@@ -98,3 +98,7 @@ test_that("duplicate dates", {
   expect_equal(identical(x[1], x[3]), TRUE)
   expect_equal(identical(x[2], x[4]), TRUE)
 })
+
+test_that("midas date with negative year", {
+  expect_equal(get_item(unstruwwel("2100ante/1550ante", "de")), c(-2100, -1550))
+})

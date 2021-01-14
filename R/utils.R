@@ -21,13 +21,11 @@ get_current_year <- function() {
 }
 
 is_year <- function(x) {
-  test <- as.character(1000:get_current_year())
-
-  return(as.character(x) %in% test)
+  return(as.character(x) %in% as.character(100:2900))
 }
 
 is_year_addition <- function(x) {
-  return(as.character(x) %in% as.character(1:999))
+  return(as.character(x) %in% as.character(1:99))
 }
 
 is_number <- function(x) {

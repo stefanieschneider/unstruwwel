@@ -66,7 +66,7 @@ unlist(unstruwwel(dates, "en", scheme = "iso-format"), use.names = FALSE)
 
 # returns a numerical interval of length 2 
 unstruwwel(dates, language = "en", scheme = "time-span") %>%
-  tibble::as_tibble() %>% dplyr::mutate(id = row_number()) %>% 
+  tibble::as_tibble() %>% dplyr::mutate(id = dplyr::row_number()) %>% 
   tidyr::gather(key = id) %>% tidyr::unnest_wider(value) %>% 
   dplyr::rename_all(dplyr::funs(c("text", "start", "end")))
 #> # A tibble: 9 x 3
@@ -98,7 +98,7 @@ unlist(unstruwwel(dates, "de", scheme = "iso-format"), use.names = FALSE)
 
 # returns a numerical interval of length 2 
 unstruwwel(dates, language = "de", scheme = "time-span") %>%
-  tibble::as_tibble() %>% dplyr::mutate(id = row_number()) %>% 
+  tibble::as_tibble() %>% dplyr::mutate(id = dplyr::row_number()) %>% 
   tidyr::gather(key = id) %>% tidyr::unnest_wider(value) %>% 
   dplyr::rename_all(dplyr::funs(c("text", "start", "end")))
 #> # A tibble: 6 x 3

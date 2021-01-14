@@ -23,7 +23,3 @@ guess_midas <- function(x, midas = FALSE, verbose = TRUE) {
 
   return(midas)
 }
-
-convert_midas <- function(x) {
-  return(x)
-}

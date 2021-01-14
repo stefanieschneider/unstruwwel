@@ -48,7 +48,8 @@ get_intervals <- function(x, start = 1, end = -1) {
     } else if (nchar(y[length(y)]) < 4) {
       x <- get_period(y, uncertain = uncertain)
     } else {
-      x <- get_year(y, uncertain = uncertain)
+      negative <- "ante" %in% x[max(end + 1, length(x))]
+      x <- get_year(y, negative, uncertain)
     }
 
     return(x)
@@ -94,6 +95,27 @@ get_decade <- function(x, uncertain = FALSE) {
   return(x_date$take(x_take, ignore_errors = TRUE))
 }
 
+get_year <- function(x, negative, uncertain = FALSE) {
+  x <- x[max(1, length(x) - 4):length(x)]
+  if (length(x) < 5) x <- c(rep(NA, 4), x)
+
+  if (uncertain) x <- c("?", x, use.names = FALSE)
+
+  if (is_number(x[length(x) - 1])) {
+    x_take <- c(x[length(x) - 1], x[length(x) - 2])
+  } else {
+    x_take <- c(x[length(x) - 2], x[length(x) - 1])
+  }
+
+  if (negative) {
+    x[length(x)] <- paste0("-", x[length(x)])
+  }
+
+  x_date <- Year$new(x[length(x)])$set_additions(x)
+
+  return(x_date$take(x_take, ignore_errors = TRUE))
+}
+
 get_period <- function(x, uncertain = FALSE) {
   x <- x[max(1, length(x) - 4):length(x)]
   if (uncertain) x <- c("?", x, use.names = FALSE)
@@ -110,21 +132,4 @@ get_period <- function(x, uncertain = FALSE) {
   x_date <- Periods$new(x)$set_additions(x)
 
   return(x_date)
-}
-
-get_year <- function(x, uncertain = FALSE) {
-  x <- x[max(1, length(x) - 4):length(x)]
-  if (length(x) < 5) x <- c(rep(NA, 4), x)
-
-  if (uncertain) x <- c("?", x, use.names = FALSE)
-
-  if (is_number(x[length(x) - 1])) {
-    x_take <- c(x[length(x) - 1], x[length(x) - 2])
-  } else {
-    x_take <- c(x[length(x) - 2], x[length(x) - 1])
-  }
-
-  x_date <- Year$new(x[length(x)])$set_additions(x)
-
-  return(x_date$take(x_take, ignore_errors = TRUE))
 }

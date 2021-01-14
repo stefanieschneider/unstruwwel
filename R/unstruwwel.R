@@ -6,9 +6,6 @@
 #' coercible to one.
 #' @param language Language code of the input vector as defined in
 #' ISO 639-1. If \code{NULL}, language is detected automatically.
-#' @param midas If \code{TRUE}, input was standardized using MIDAS
-#' (Marburger Informations-, Dokumentations- und Administrations-
-#' System). See \url{https://doi.org/10.11588/artdok.00003770}.
 #' @param verbose If \code{TRUE}, additional diagnostics are printed.
 #' @param scheme Scheme code of the output list. Either \code{time-span},
 #' \code{iso-format}, or \code{object}.
@@ -32,48 +29,41 @@
 #'
 #' @rdname unstruwwel
 #' @export
-unstruwwel <- function(x, language = NULL, midas = FALSE, verbose = TRUE,
+unstruwwel <- function(x, language = NULL, verbose = TRUE,
     scheme = "time-span", fuzzify = c(0, 0)
 ) {
   x <- unlist(x); scheme <- tolower(scheme)
   language <- unlist(language, recursive = TRUE)
 
-  assertthat::assert_that(is.vector(x))
-  assertthat::assert_that(is.logical(midas))
   assertthat::assert_that(is.logical(verbose))
+  assertthat::assert_that(is.vector(x), length(x) != 0)
 
   assertthat::assert_that(is.numeric(fuzzify), length(fuzzify) == 2)
   assertthat::assert_that(scheme %in% c("iso-format", "time-span", "object"))
 
   if (anyDuplicated(x)) {
     x_temp <- x[!duplicated(x)]
-    indices <- match(x, x_temp)
-    x <- x_temp
+    indices <- match(x, x_temp); x <- x_temp
   } else {
-    indices <- seq_along(x)
+    indices <- 1:length(x)  # faster than seq_along()
   }
 
-  if (!guess_midas(x, midas = midas, verbose = verbose)) {
-    if (is.null(language)) language <- guess_language(x, verbose)
-    assertthat::assert_that(is.vector(language), is.character(language))
+  if (is.null(language)) language <- guess_language(x, verbose)
+  assertthat::assert_that(is.vector(language), is.character(language))
 
-    assertthat::assert_that(
-      is_valid_language(language), msg = sprintf(
-        paste("`%s` is either not defined in ISO 639-1 or not yet",
-          "implemented."), get_invalid_language(language)
-      )
+  assertthat::assert_that(
+    is_valid_language(language), msg = sprintf(
+      paste("`%s` is either not defined in ISO 639-1 or not yet",
+        "implemented."), get_invalid_language(language)
     )
+  )
 
-    dates <- standardize_vector(x, language, "\\.(?=[^0-9]|$)") %>%
-      extract_groups() %>% map(get_dates, scheme, fuzzify)
-  } else {
-    dates <- map(x, convert_midas) # language-independent
-  }
+  dates <- standardize_vector(x, language, "\\.(?=[^0-9]|$)") %>%
+    extract_groups() %>% map(get_dates, scheme, fuzzify)
 
   names(dates) <- x
-  dates <- dates[indices]
 
-  return(dates)
+  return(dates[indices])
 }
 
 #' @importFrom stringr str_remove_all str_replace_all str_squish
