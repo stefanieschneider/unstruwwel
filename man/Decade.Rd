@@ -14,7 +14,7 @@ An Object of \code{\link{R6Class}} with methods to set
 common time periods and specifications for decades.
 }
 \examples{
-\donttest{
+if (interactive()) {
 x <- Decade$new(1520)
 x$take(1, type = "half")
 }

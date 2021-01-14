@@ -19,7 +19,7 @@
 #' @return A named list of vectors or objects of \code{\link{R6Class}}.
 #'
 #' @examples
-#' \donttest{
+#' if (interactive()) {
 #' unstruwwel("1. Hälfte 19. Jahrhundert", language = "de")
 #' unstruwwel("circa between 1901 and 1905", language = "en")
 #' }

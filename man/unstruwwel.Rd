@@ -44,7 +44,7 @@ Although multiple languages can be detected, only dominant
 ones are ultimately set.
 }
 \examples{
-\donttest{
+if (interactive()) {
 unstruwwel("1. Hälfte 19. Jahrhundert", language = "de")
 unstruwwel("circa between 1901 and 1905", language = "en")
 }
