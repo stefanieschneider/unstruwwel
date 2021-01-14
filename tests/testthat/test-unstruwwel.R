@@ -91,3 +91,10 @@ test_that("date with century", {
 
   expect_equal(get_item(unstruwwel("last third 17th cent", "en")), c(1667, 1700))
 })
+
+test_that("duplicate dates", {
+  x <- unstruwwel(rep(c("late 16th century", "ca. 1920"), 10), "en")
+
+  expect_equal(identical(x[1], x[3]), TRUE)
+  expect_equal(identical(x[2], x[4]), TRUE)
+})

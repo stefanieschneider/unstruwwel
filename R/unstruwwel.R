@@ -45,6 +45,14 @@ unstruwwel <- function(x, language = NULL, midas = FALSE, verbose = TRUE,
   assertthat::assert_that(is.numeric(fuzzify), length(fuzzify) == 2)
   assertthat::assert_that(scheme %in% c("iso-format", "time-span", "object"))
 
+  if (anyDuplicated(x)) {
+    x_temp <- x[!duplicated(x)]
+    indices <- match(x, x_temp)
+    x <- x_temp
+  } else {
+    indices <- seq_along(x)
+  }
+
   if (!guess_midas(x, midas = midas, verbose = verbose)) {
     if (is.null(language)) language <- guess_language(x, verbose)
     assertthat::assert_that(is.vector(language), is.character(language))
@@ -63,6 +71,7 @@ unstruwwel <- function(x, language = NULL, midas = FALSE, verbose = TRUE,
   }
 
   names(dates) <- x
+  dates <- dates[indices]
 
   return(dates)
 }
