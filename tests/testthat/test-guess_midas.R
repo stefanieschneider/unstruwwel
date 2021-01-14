@@ -7,4 +7,8 @@ test_that("show message", {
   expect_success(
     expect_message(guess_language(get("midas"), verbose = TRUE))
   )
+
+  expect_success(
+    expect_message(guess_midas(get("midas"), verbose = TRUE))
+  )
 })

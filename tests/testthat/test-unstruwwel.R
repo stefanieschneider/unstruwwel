@@ -8,6 +8,7 @@ test_that("invalid language", {
 
 test_that("no date", {
   expect_equal(get_item(unstruwwel("undatiert", "de")), c(NA, NA))
+  expect_equal(get_item(unstruwwel("undatiert", "de", scheme = "object")), NA)
 })
 
 test_that("approximate date", {
@@ -80,16 +81,39 @@ test_that("date with decade", {
   expect_equal(get_item(unstruwwel("1760er Jahre", "de")), c(1760, 1769))
 })
 
+test_that("date with uncertain decade", {
+  x <- unstruwwel("etwa 1550er Jahre", "de", scheme = "object")
+
+  expect_equal(get_item(x)$fuzzy, 1)
+  expect_equal(get_item(x)$time_span, c(1550, 1559))
+  expect_equal(get_item(x)$iso_format, "1550-01-01?/1559-12-31?")
+})
+
 test_that("date with century", {
-  x <- unstruwwel("circa 1st half 5th century", "en", scheme = "object")
+  x <- unstruwwel("1st half 5th century", "en", scheme = "object")
 
   expect_equal(get_item(x)$time_span, c(401, 450))
-  # expect_equal(get_item(x)$iso_format, "0401-01-01~/0450-12-31~")
+  expect_equal(get_item(x)$iso_format, "0401-01-01/0450-12-31")
 
   expect_equal(get_item(unstruwwel("19. Jh.", "de")), c(1801, 1900))
   expect_equal(get_item(unstruwwel("5. Jh. v. Chr", "de")), c(-500, -401))
 
   expect_equal(get_item(unstruwwel("last third 17th cent", "en")), c(1667, 1700))
+})
+
+test_that("date with uncertain century", {
+  x <- unstruwwel("circa 18th century", "en", scheme = "object")
+
+  expect_equal(get_item(x)$fuzzy, -1)
+  expect_equal(get_item(x)$time_span, c(1701, 1800))
+  expect_equal(get_item(x)$iso_format, "1701-01-01~/1800-12-31~")
+})
+
+test_that("trailing zero", {
+  x <- unstruwwel("ca. 1. Hälfte 2. Jh.", "de", scheme = "object")
+
+  expect_equal(get_item(x)$time_span, c(101, 150))
+  expect_equal(get_item(x)$iso_format, "0101-01-01~/0150-12-31~")
 })
 
 test_that("duplicate dates", {

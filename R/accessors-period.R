@@ -103,7 +103,10 @@ Periods <- R6Class(
     #' @field iso_format Convert and return a date in ISO 8601.
     iso_format = function(value) {
       if (missing(value)) {
-        x <- c(int_start(self$interval), int_end(self$interval))
+        x <- c(
+          stringr::str_pad(int_start(self$interval), 10, pad = "0"),
+          stringr::str_pad(int_end(self$interval), 10, pad = "0")
+        )
 
         if (self$fuzzy < 0) x <- paste0(x, "~", collapse = NULL)
         if (self$fuzzy > 0) x <- paste0(x, "?", collapse = NULL)
@@ -113,8 +116,6 @@ Periods <- R6Class(
 
         if (year(int_end(self$interval)) == 9999)
           x <- paste(x[1], "..", sep = "", collapse = "")
-
-        x <- stringr::str_pad(x, width = 10, pad = "0")
 
         return(paste(x, collapse = "/"))
       } else {
