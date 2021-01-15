@@ -3,7 +3,8 @@
 
 # unstruwwel <img src="man/figures/logo.png" align="right" width="120" />
 
-[![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Lifecycle
+badge](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Travis CI Build
 status](https://travis-ci.org/stefanieschneider/unstruwwel.svg?branch=master)](https://travis-ci.org/stefanieschneider/unstruwwel)
 [![AppVeyor Build
@@ -60,7 +61,7 @@ dates <- c(
 
 # returns valid ISO 8601:2-2019 dates
 unlist(unstruwwel(dates, "en", scheme = "iso-format"), use.names = FALSE)
-#> [1] "-500-12-31/-401-01-01"   NA                        "1586-01-01/1600-12-31"  
+#> [1] "-0500-12-31/-0401-01-01" NA                        "1586-01-01/1600-12-31"  
 #> [4] "1146-01-01/1155-12-31"   "1884-01-01/1885-12-31"   "1963-06-01/1963-06-30"  
 #> [7] "1958-08-11/1958-08-11"   "1920-01-01~/1920-12-31~" "..1855-12-31"
 

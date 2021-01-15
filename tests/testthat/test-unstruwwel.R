@@ -114,6 +114,11 @@ test_that("trailing zero", {
 
   expect_equal(get_item(x)$time_span, c(101, 150))
   expect_equal(get_item(x)$iso_format, "0101-01-01~/0150-12-31~")
+
+  x <- unstruwwel("ca. 2. Jh. v. Chr", "de", scheme = "object")
+
+  expect_equal(get_item(x)$time_span, c(-200, -101))
+  expect_equal(get_item(x)$iso_format, "-0200-12-31~/-0101-01-01~")
 })
 
 test_that("duplicate dates", {
