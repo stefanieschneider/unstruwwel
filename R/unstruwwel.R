@@ -62,8 +62,9 @@ unstruwwel <- function(x, language = NULL, verbose = TRUE,
     extract_groups() %>% map(get_dates, scheme, fuzzify)
 
   names(dates) <- x
+  dates <- dates[indices]
 
-  return(dates[indices])
+  return(dates)
 }
 
 #' @importFrom stringr str_remove_all str_replace_all str_squish
@@ -81,10 +82,10 @@ standardize_vector <- function(x, language, remove = NULL) {
   replacements <- bind_rows(language$replacements) %>%
     filter(.data$before != .data$after) %>% distinct()
 
-  # simplification <- bind_rows(language$simplifications)
+  # TODO: remove until utf8 package is updated on CRAN
+  # x <- utf8::utf8_normalize(x) %>% str_squish() %>%
 
-  x <- utf8::utf8_normalize(x) %>% str_squish() %>%
-    str_replace_all(
+  x <- str_squish(x) %>% str_replace_all(
       set_names(replacements$after, replacements$pattern)
     )
 

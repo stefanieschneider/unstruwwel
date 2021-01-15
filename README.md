@@ -10,7 +10,7 @@ status](https://travis-ci.org/stefanieschneider/unstruwwel.svg?branch=master)](h
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/stefanieschneider/unstruwwel?branch=master&svg=true)](https://ci.appveyor.com/project/stefanieschneider/unstruwwel)
 [![Coverage
-status](http://codecov.io/github/stefanieschneider/unstruwwel/coverage.svg?branch=master)](http://codecov.io/github/stefanieschneider/unstruwwel?branch=master)
+status](https://codecov.io/github/stefanieschneider/unstruwwel/coverage.svg?branch=master)](https://codecov.io/github/stefanieschneider/unstruwwel?branch=master)
 
 ## Overview
 

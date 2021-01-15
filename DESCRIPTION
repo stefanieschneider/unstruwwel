@@ -15,7 +15,6 @@ Suggests:
     roxygen2
 Imports: 
     R6,
-    utf8,
     assertthat,
     lubridate,
     magrittr,
