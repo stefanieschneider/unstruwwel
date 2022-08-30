@@ -105,6 +105,13 @@ Periods <- R6Class(
       if (missing(value)) {
         x <- c(int_start(self$interval), int_end(self$interval))
 
+        if (year(x[2]) < 0 && year(x[2]) > -1000) {
+          x <- stringr::str_pad(substring(x, 2), 10, pad = "0")
+          x <- paste0("-", x)  # set as negative date again
+        } else if (year(x[1]) > 0 && year(x[1]) < 1000) {
+          x <- stringr::str_pad(x, width = 10, pad = "0")
+        }
+
         if (self$fuzzy < 0) x <- paste0(x, "~", collapse = NULL)
         if (self$fuzzy > 0) x <- paste0(x, "?", collapse = NULL)
 
@@ -113,8 +120,6 @@ Periods <- R6Class(
 
         if (year(int_end(self$interval)) == 9999)
           x <- paste(x[1], "..", sep = "", collapse = "")
-
-        x <- stringr::str_pad(x, width = 10, pad = "0")
 
         return(paste(x, collapse = "/"))
       } else {

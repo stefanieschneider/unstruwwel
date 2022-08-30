@@ -3,13 +3,17 @@
 
 # unstruwwel <img src="man/figures/logo.png" align="right" width="120" />
 
-[![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Lifecycle
+badge](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4451796.svg)](https://doi.org/10.5281/zenodo.4451796)
+[![CRAN
+badge](http://www.r-pkg.org/badges/version/unstruwwel)](https://cran.r-project.org/package=unstruwwel)
 [![Travis CI Build
 status](https://travis-ci.org/stefanieschneider/unstruwwel.svg?branch=master)](https://travis-ci.org/stefanieschneider/unstruwwel)
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/stefanieschneider/unstruwwel?branch=master&svg=true)](https://ci.appveyor.com/project/stefanieschneider/unstruwwel)
 [![Coverage
-status](http://codecov.io/github/stefanieschneider/unstruwwel/coverage.svg?branch=master)](http://codecov.io/github/stefanieschneider/unstruwwel?branch=master)
+status](https://codecov.io/github/stefanieschneider/unstruwwel/coverage.svg?branch=master)](https://codecov.io/github/stefanieschneider/unstruwwel?branch=master)
 
 ## Overview
 
@@ -34,6 +38,13 @@ For the German-language original text, see the online digital library
 [Wikisource](https://de.wikisource.org/wiki/Der_Struwwelpeter/Struwwelpeter).
 
 ## Installation
+
+You can install the released version of unstruwwel from
+[CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("unstruwwel")
+```
 
 To install the development version from
 [GitHub](https://github.com/stefanieschneider/unstruwwel) use:
@@ -60,7 +71,7 @@ dates <- c(
 
 # returns valid ISO 8601:2-2019 dates
 unlist(unstruwwel(dates, "en", scheme = "iso-format"), use.names = FALSE)
-#> [1] "-500-12-31/-401-01-01"   NA                        "1586-01-01/1600-12-31"  
+#> [1] "-0500-12-31/-0401-01-01" NA                        "1586-01-01/1600-12-31"  
 #> [4] "1146-01-01/1155-12-31"   "1884-01-01/1885-12-31"   "1963-06-01/1963-06-30"  
 #> [7] "1958-08-11/1958-08-11"   "1920-01-01~/1920-12-31~" "..1855-12-31"
 

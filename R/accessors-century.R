@@ -4,7 +4,7 @@
 #' common time periods and specifications for centuries.
 #'
 #' @examples
-#' \donttest{
+#' if (interactive()) {
 #' x <- Century$new(15)
 #' x$take(2, type = "third")
 #' }

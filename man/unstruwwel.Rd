@@ -7,7 +7,6 @@
 unstruwwel(
   x,
   language = NULL,
-  midas = FALSE,
   verbose = TRUE,
   scheme = "time-span",
   fuzzify = c(0, 0)
@@ -19,10 +18,6 @@ coercible to one.}
 
 \item{language}{Language code of the input vector as defined in
 ISO 639-1. If \code{NULL}, language is detected automatically.}
-
-\item{midas}{If \code{TRUE}, input was standardized using MIDAS
-(Marburger Informations-, Dokumentations- und Administrations-
-System). See \url{https://doi.org/10.11588/artdok.00003770}.}
 
 \item{verbose}{If \code{TRUE}, additional diagnostics are printed.}
 
@@ -44,7 +39,7 @@ Although multiple languages can be detected, only dominant
 ones are ultimately set.
 }
 \examples{
-\donttest{
+if (interactive()) {
 unstruwwel("1. Hälfte 19. Jahrhundert", language = "de")
 unstruwwel("circa between 1901 and 1905", language = "en")
 }
