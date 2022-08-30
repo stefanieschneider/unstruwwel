@@ -114,7 +114,8 @@
         "between"
     ],
     "and": [
-        "and"
+        "and",
+        "-"
     ],
     "or": [
         "or"

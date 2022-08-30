@@ -84,8 +84,8 @@ add_language <- function(language, path) {
 languages <- list.files(
     "./data-raw", "\\.json$", full.names = TRUE
   ) %>%
-  purrr::map(get_language) %>% dplyr::bind_rows() %>%
-  unstruwwel:::normalize()
+  purrr::map(get_language) %>% dplyr::bind_rows()
+  # %>% unstruwwel:::normalize()
 
 # add_language("it", path = "./data-raw")
 usethis::use_data(languages, overwrite = TRUE)

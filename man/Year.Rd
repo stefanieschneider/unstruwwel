@@ -26,21 +26,21 @@ x$take(15, type = "june")
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Year$new()}}
-\item \href{#method-take}{\code{Year$take()}}
-\item \href{#method-clone}{\code{Year$clone()}}
+\item \href{#method-Year-new}{\code{Year$new()}}
+\item \href{#method-Year-take}{\code{Year$take()}}
+\item \href{#method-Year-clone}{\code{Year$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="unstruwwel" data-topic="Periods" data-id="set_additions">}\href{../../unstruwwel/html/Periods.html#method-set_additions}{\code{unstruwwel::Periods$set_additions()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="unstruwwel" data-topic="Periods" data-id="set_additions"><a href='../../unstruwwel/html/Periods.html#method-Periods-set_additions'><code>unstruwwel::Periods$set_additions()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Year-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Year-new}{}}}
 \subsection{Method \code{new()}}{
 Helper function to specify a time period.
 
@@ -69,8 +69,8 @@ common time periods and specifications for years.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-take"></a>}}
-\if{latex}{\out{\hypertarget{method-take}{}}}
+\if{html}{\out{<a id="method-Year-take"></a>}}
+\if{latex}{\out{\hypertarget{method-Year-take}{}}}
 \subsection{Method \code{take()}}{
 Specify a year.
 \subsection{Usage}{
@@ -99,8 +99,8 @@ common time periods and specifications for years.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Year-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Year-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

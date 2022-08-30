@@ -25,10 +25,10 @@ package is inspired by Heinrich Hoffmann’s rhymed story
 “[Struwwelpeter](http://www.gutenberg.org/files/12116/12116-h/12116-h.htm#Shock-headed_Peter)”,
 which goes as follows:
 
-> Just look at him\! there he stands, with his nasty hair and hands.
-> See\! his nails are never cut; they are grimed as black as soot; and
-> the sloven, I declare, never once has combed his hair; anything to me
-> is sweeter than to see Shock-headed Peter.
+> Just look at him! there he stands, with his nasty hair and hands. See!
+> his nails are never cut; they are grimed as black as soot; and the
+> sloven, I declare, never once has combed his hair; anything to me is
+> sweeter than to see Shock-headed Peter.
 
 For the German-language original text, see the online digital library
 [Wikisource](https://de.wikisource.org/wiki/Der_Struwwelpeter/Struwwelpeter).
@@ -66,10 +66,10 @@ unlist(unstruwwel(dates, "en", scheme = "iso-format"), use.names = FALSE)
 
 # returns a numerical interval of length 2 
 unstruwwel(dates, language = "en", scheme = "time-span") %>%
-  tibble::as_tibble() %>% dplyr::mutate(id = row_number()) %>% 
+  tibble::as_tibble() %>% dplyr::mutate(id = dplyr::row_number()) %>% 
   tidyr::gather(key = id) %>% tidyr::unnest_wider(value) %>% 
   dplyr::rename_all(dplyr::funs(c("text", "start", "end")))
-#> # A tibble: 9 x 3
+#> # A tibble: 9 × 3
 #>   text              start   end
 #>   <chr>             <dbl> <dbl>
 #> 1 5th century b.c.   -500  -401
@@ -98,10 +98,10 @@ unlist(unstruwwel(dates, "de", scheme = "iso-format"), use.names = FALSE)
 
 # returns a numerical interval of length 2 
 unstruwwel(dates, language = "de", scheme = "time-span") %>%
-  tibble::as_tibble() %>% dplyr::mutate(id = row_number()) %>% 
+  tibble::as_tibble() %>% dplyr::mutate(id = dplyr::row_number()) %>% 
   tidyr::gather(key = id) %>% tidyr::unnest_wider(value) %>% 
   dplyr::rename_all(dplyr::funs(c("text", "start", "end")))
-#> # A tibble: 6 x 3
+#> # A tibble: 6 × 3
 #>   text                                              start   end
 #>   <chr>                                             <dbl> <dbl>
 #> 1 letztes Drittel 15. und 1. Hälfte 16. Jahrhundert  1467  1550

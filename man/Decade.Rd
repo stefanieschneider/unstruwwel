@@ -26,21 +26,21 @@ x$take(1, type = "half")
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Decade$new()}}
-\item \href{#method-clone}{\code{Decade$clone()}}
+\item \href{#method-Decade-new}{\code{Decade$new()}}
+\item \href{#method-Decade-clone}{\code{Decade$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="unstruwwel" data-topic="Periods" data-id="set_additions">}\href{../../unstruwwel/html/Periods.html#method-set_additions}{\code{unstruwwel::Periods$set_additions()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="unstruwwel" data-topic="Periods" data-id="take">}\href{../../unstruwwel/html/Periods.html#method-take}{\code{unstruwwel::Periods$take()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="unstruwwel" data-topic="Periods" data-id="set_additions"><a href='../../unstruwwel/html/Periods.html#method-Periods-set_additions'><code>unstruwwel::Periods$set_additions()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="unstruwwel" data-topic="Periods" data-id="take"><a href='../../unstruwwel/html/Periods.html#method-Periods-take'><code>unstruwwel::Periods$take()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Decade-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Decade-new}{}}}
 \subsection{Method \code{new()}}{
 Helper function to specify the beginning of a decade.
 
@@ -72,8 +72,8 @@ common time periods and specifications for decades.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Decade-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Decade-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

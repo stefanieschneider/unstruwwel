@@ -8,6 +8,7 @@ test_that("invalid language", {
 
 test_that("no date", {
   expect_equal(get_item(unstruwwel("undatiert", "de")), c(NA, NA))
+  expect_equal(get_item(unstruwwel(NA, "de")), c(NA, NA))
 })
 
 test_that("approximate date", {
@@ -73,6 +74,16 @@ test_that("date with year, month, and day", {
 
   expect_equal(get_item(x)$time_span, c(1856, 1856))
   expect_equal(get_item(x)$iso_format, "1856-01-01/1856-01-01")
+})
+
+test_that("date with multiple years, months, and days", {
+  x <- unstruwwel("13. Juli 1882 - 15. Juli 1882", "de", scheme = "object")
+
+  expect_equal(get_item(x, 1)$time_span, c(1882, 1882))
+  expect_equal(get_item(x, 2)$time_span, c(1882, 1882))
+
+  expect_equal(get_item(x, 1)$iso_format, "1882-07-13/1882-07-13")
+  expect_equal(get_item(x, 2)$iso_format, "1882-07-15/1882-07-15")
 })
 
 test_that("date with decade", {

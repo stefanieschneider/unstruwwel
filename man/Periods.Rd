@@ -40,15 +40,15 @@ common time periods and specifications for time periods.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Periods$new()}}
-\item \href{#method-set_additions}{\code{Periods$set_additions()}}
-\item \href{#method-take}{\code{Periods$take()}}
-\item \href{#method-clone}{\code{Periods$clone()}}
+\item \href{#method-Periods-new}{\code{Periods$new()}}
+\item \href{#method-Periods-set_additions}{\code{Periods$set_additions()}}
+\item \href{#method-Periods-take}{\code{Periods$take()}}
+\item \href{#method-Periods-clone}{\code{Periods$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Periods-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Periods-new}{}}}
 \subsection{Method \code{new()}}{
 Helper function to specify a time period.
 
@@ -77,8 +77,8 @@ are supported: \code{"early"}, \code{"mid"}, \code{"late"},
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_additions"></a>}}
-\if{latex}{\out{\hypertarget{method-set_additions}{}}}
+\if{html}{\out{<a id="method-Periods-set_additions"></a>}}
+\if{latex}{\out{\hypertarget{method-Periods-set_additions}{}}}
 \subsection{Method \code{set_additions()}}{
 Set additions for a time period.
 \subsection{Usage}{
@@ -94,8 +94,8 @@ Set additions for a time period.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-take"></a>}}
-\if{latex}{\out{\hypertarget{method-take}{}}}
+\if{html}{\out{<a id="method-Periods-take"></a>}}
+\if{latex}{\out{\hypertarget{method-Periods-take}{}}}
 \subsection{Method \code{take()}}{
 Specify a period.
 \subsection{Usage}{
@@ -124,8 +124,8 @@ common time periods and specifications for time periods.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Periods-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Periods-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
