@@ -4,7 +4,7 @@
 # unstruwwel <img src="man/figures/logo.png" align="right" width="120" />
 
 [![Lifecycle
-badge](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+badge](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4451796.svg)](https://doi.org/10.5281/zenodo.4451796)
 [![CRAN
 badge](http://www.r-pkg.org/badges/version/unstruwwel)](https://cran.r-project.org/package=unstruwwel)
