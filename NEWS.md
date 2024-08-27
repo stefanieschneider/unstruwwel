@@ -1,3 +1,7 @@
+# unstruwwel 0.2.1
+
+* Split given name and family name in DESCRIPTION
+
 # unstruwwel 0.2.0
 
 * Re-generate `.Rd` files using the current CRAN version of roxygen2
