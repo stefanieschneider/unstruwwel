@@ -29,7 +29,7 @@ of approximate or uncertain time periods. This is only applied if
 \code{scheme == "time-span"}.}
 }
 \value{
-A named list of vectors or objects of \code{\link{R6Class}}.
+A named list of vectors or objects of \code{R6Class}.
 }
 \description{
 Detect and Parse Historic Dates, e.g., to ISO 8601:2-2019.

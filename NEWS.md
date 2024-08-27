@@ -2,10 +2,12 @@
 
 * Split given name and family name in DESCRIPTION
 
+
 # unstruwwel 0.2.0
 
 * Re-generate `.Rd` files using the current CRAN version of roxygen2
 * Fix bug in `unstruwwel()` if there are multiple dates with day specifications
+
 
 # unstruwwel 0.1.0
 

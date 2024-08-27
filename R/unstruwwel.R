@@ -13,7 +13,7 @@
 #' of approximate or uncertain time periods. This is only applied if
 #' \code{scheme == "time-span"}.
 #'
-#' @return A named list of vectors or objects of \code{\link{R6Class}}.
+#' @return A named list of vectors or objects of \code{R6Class}.
 #'
 #' @examples
 #' if (interactive()) {

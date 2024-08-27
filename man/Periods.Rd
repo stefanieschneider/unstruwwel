@@ -10,7 +10,7 @@ Set a Period and Get its Time Interval
 Set a Period and Get its Time Interval
 }
 \details{
-An Object of \code{\link{R6Class}} with methods to set
+An Object of \code{R6Class} with methods to set
 common time periods and specifications for time periods.
 }
 \section{Public fields}{
