@@ -119,7 +119,7 @@ are supported: \code{"early"}, \code{"mid"}, \code{"late"},
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-Object of \code{\link{R6Class}} with methods to set
+Object of \code{R6Class} with methods to set
 common time periods and specifications for time periods.
 }
 }

@@ -73,7 +73,7 @@ Century <- R6Class(
     #'
     #' @param value A numerical scalar.
     #'
-    #' @return Object of \code{\link{R6Class}} with methods to set
+    #' @return Object of \code{R6Class} with methods to set
     #' common time periods and specifications for centuries.
     initialize = function(value) {
       if (is.character(value)) value <- as.numeric(value)

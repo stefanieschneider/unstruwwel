@@ -8,19 +8,17 @@ badge](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecy
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4451796.svg)](https://doi.org/10.5281/zenodo.4451796)
 [![CRAN
 badge](http://www.r-pkg.org/badges/version/unstruwwel)](https://cran.r-project.org/package=unstruwwel)
-[![Travis CI Build
-status](https://travis-ci.org/stefanieschneider/unstruwwel.svg?branch=master)](https://travis-ci.org/stefanieschneider/unstruwwel)
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/stefanieschneider/unstruwwel?branch=master&svg=true)](https://ci.appveyor.com/project/stefanieschneider/unstruwwel)
 [![Coverage
-status](https://codecov.io/github/stefanieschneider/unstruwwel/coverage.svg?branch=master)](https://codecov.io/github/stefanieschneider/unstruwwel?branch=master)
+status](https://codecov.io/github/stefanieschneider/unstruwwel/coverage.svg?branch=master)](https://app.codecov.io/github/stefanieschneider/unstruwwel?branch=master)
 
 ## Overview
 
 This R package provides means to detect and parse historic dates, e.g.,
 to ISO 8601:2-2019. It automatically converts language-specific verbal
 information, e.g., “circa 1st half of the 19th century,” into its
-standardized numerical counterparts, e.g., “1801-01-01\~/1850-12-31\~.”
+standardized numerical counterparts, e.g., “1801-01-01~/1850-12-31~.”
 The package follows the recommendations of the MIDAS (Marburger
 Informations-, Dokumentations- und Administrations-System), see, e.g.,
 <https://doi.org/10.11588/artdok.00003770>. It internally uses
@@ -77,8 +75,10 @@ unlist(unstruwwel(dates, "en", scheme = "iso-format"), use.names = FALSE)
 
 # returns a numerical interval of length 2 
 unstruwwel(dates, language = "en", scheme = "time-span") %>%
-  tibble::as_tibble() %>% dplyr::mutate(id = dplyr::row_number()) %>% 
-  tidyr::gather(key = id) %>% tidyr::unnest_wider(value) %>% 
+  tibble::as_tibble() %>%
+  dplyr::mutate(id = dplyr::row_number()) %>% 
+  tidyr::gather(key = id) %>%
+  tidyr::unnest_wider(value, names_sep = "_") %>% 
   dplyr::rename_all(dplyr::funs(c("text", "start", "end")))
 #> # A tibble: 9 × 3
 #>   text              start   end
@@ -109,8 +109,10 @@ unlist(unstruwwel(dates, "de", scheme = "iso-format"), use.names = FALSE)
 
 # returns a numerical interval of length 2 
 unstruwwel(dates, language = "de", scheme = "time-span") %>%
-  tibble::as_tibble() %>% dplyr::mutate(id = dplyr::row_number()) %>% 
-  tidyr::gather(key = id) %>% tidyr::unnest_wider(value) %>% 
+  tibble::as_tibble() %>%
+  dplyr::mutate(id = dplyr::row_number()) %>% 
+  tidyr::gather(key = id) %>%
+  tidyr::unnest_wider(value, names_sep = "_") %>% 
   dplyr::rename_all(dplyr::funs(c("text", "start", "end")))
 #> # A tibble: 6 × 3
 #>   text                                              start   end

@@ -194,7 +194,7 @@ Periods <- R6Class(
     #' \code{type} is `NULL`, \code{x} defines a year or decade.
     #' @param ignore_errors If `TRUE`, error messages are ignored.
     #'
-    #' @return Object of \code{\link{R6Class}} with methods to set
+    #' @return Object of \code{R6Class} with methods to set
     #' common time periods and specifications for time periods.
     take = function(x = NA, type = NA, ignore_errors = FALSE) {
       suppressWarnings({

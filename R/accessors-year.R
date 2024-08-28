@@ -65,7 +65,7 @@ Year <- R6Class(
     #'
     #' @param value A numerical scalar.
     #'
-    #' @return Object of \code{\link{R6Class}} with methods to set
+    #' @return Object of \code{R6Class} with methods to set
     #' common time periods and specifications for years.
     initialize = function(value) {
       if (is.character(value)) value <- as.numeric(value)
@@ -98,7 +98,7 @@ Year <- R6Class(
     #' \code{"winter"}, and all English-language months.
     #' @param ignore_errors If `TRUE`, error messages are ignored.
     #'
-    #' @return Object of \code{\link{R6Class}} with methods to set
+    #' @return Object of \code{R6Class} with methods to set
     #' common time periods and specifications for years.
     take = function(x = NA, type = NA, ignore_errors = FALSE) {
       suppressWarnings({

@@ -75,7 +75,7 @@ Decade <- R6Class(
     #' @param official_def If `TRUE`, the official definition that
     #' begins with the year 1 is used.
     #'
-    #' @return Object of \code{\link{R6Class}} with methods to set
+    #' @return Object of \code{R6Class} with methods to set
     #' common time periods and specifications for decades.
     initialize = function(value, official_def = FALSE) {
       if (is.character(value)) value <- as.numeric(value)
