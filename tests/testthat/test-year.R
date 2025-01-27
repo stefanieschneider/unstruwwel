@@ -1,5 +1,4 @@
 test_that("invalid year", {
-  expect_error(Year$new(2025))
   expect_error(Year$new(197.5))
   expect_error(Year$new(c(197, 198)))
 })

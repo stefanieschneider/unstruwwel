@@ -1,6 +1,6 @@
 Package: unstruwwel
 Title: Detect and Parse Historic Dates
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: person('Stefanie', 'Schneider', email = 'stefanie.schneider@itg.uni-muenchen.de', role = c('cre', 'aut'), comment = c(ORCID = "0000-0003-4915-6949"))
 Maintainer: Stefanie Schneider <stefanie.schneider@itg.uni-muenchen.de>
 Description: Automatically converts language-specific verbal information, e.g., "1st half of the 19th century," to its standardized numerical counterparts, e.g., "1801-01-01/1850-12-31." It follows the recommendations of the 'MIDAS' ('Marburger Informations-, Dokumentations- und Administrations-System'), see <doi:10.11588/artdok.00003770>.

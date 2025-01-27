@@ -1,3 +1,8 @@
+# unstruwwel 0.2.2
+
+* Remove invalid year check (`expect_error(Year$new(2025))`)
+
+
 # unstruwwel 0.2.1
 
 * Split given name and family name in DESCRIPTION
